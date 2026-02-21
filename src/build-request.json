@@ -1,0 +1,92 @@
+{
+  "kind": "build_request",
+  "title": "Add Pinterest to social media link options in user profiles",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-21",
+      "text": "Update the UserProfile data model in backend/main.mo to include a Pinterest link field in the socialMediaLinks record, storing the Pinterest profile URL as an optional Text value",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "Can you make it so I can link to Pinterest?"
+        ]
+      },
+      "acceptanceCriteria": [
+        "UserProfile type includes pinterest field in socialMediaLinks",
+        "Pinterest link is stored as optional Text",
+        "Existing profiles remain compatible with the schema change"
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "text": "Add Pinterest input field to the ProfileSetupModal component where users can enter their Pinterest profile URL alongside existing social media links (Twitter, Instagram, LinkedIn, YouTube)",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "Can you make it so I can link to Pinterest?"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Pinterest input field is displayed in profile setup modal",
+        "Input field accepts Pinterest URL format",
+        "Pinterest link is included when submitting profile creation"
+      ]
+    },
+    {
+      "id": "REQ-23",
+      "text": "Display the Pinterest link on the ProfilePage component as a clickable social media icon alongside other social links (Twitter, Instagram, LinkedIn, YouTube), opening the Pinterest profile in a new tab when clicked",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "Can you make it so I can link to Pinterest?"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Pinterest icon is displayed when a user has a Pinterest link in their profile",
+        "Clicking the Pinterest icon opens the URL in a new browser tab",
+        "Pinterest icon matches the styling of other social media icons"
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "text": "Add Pinterest input field to profile editing functionality, allowing users to add or update their Pinterest profile URL after initial profile creation",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "Can you make it so I can link to Pinterest?"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can edit their Pinterest link in profile settings",
+        "Changes to Pinterest link are saved to the backend",
+        "Updated Pinterest link is immediately reflected on the profile page"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify the existing socialMediaLinks structure for other platforms",
+    "Maintain consistency with existing social media link patterns in the UI"
+  ],
+  "nonGoals": [
+    "Validating Pinterest URL format",
+    "Embedding Pinterest content or widgets",
+    "Auto-fetching Pinterest profile information"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

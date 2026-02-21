@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.625rem;
+        --background: 0.98 0 0;
+        --foreground: 0.15 0 0;
+        --card: 1 0 0;
+        --card-foreground: 0.15 0 0;
+        --popover: 1 0 0;
+        --popover-foreground: 0.15 0 0;
+        --primary: 0.55 0.15 220;
+        --primary-foreground: 0.98 0 0;
+        --secondary: 0.95 0 0;
+        --secondary-foreground: 0.15 0 0;
+        --muted: 0.96 0 0;
+        --muted-foreground: 0.50 0 0;
+        --accent: 0.94 0 0;
+        --accent-foreground: 0.15 0 0;
+        --destructive: 0.60 0.22 25;
+        --destructive-foreground: 0.98 0 0;
+        --border: 0.90 0 0;
+        --input: 0.90 0 0;
+        --ring: 0.55 0.15 220;
+        --chart-1: 0.55 0.15 220;
+        --chart-2: 0.60 0.18 145;
+        --chart-3: 0.65 0.20 35;
+        --chart-4: 0.50 0.12 280;
+        --chart-5: 0.70 0.15 180;
+        --sidebar: 0.98 0 0;
+        --sidebar-foreground: 0.15 0 0;
+        --sidebar-primary: 0.55 0.15 220;
+        --sidebar-primary-foreground: 0.98 0 0;
+        --sidebar-accent: 0.95 0 0;
+        --sidebar-accent-foreground: 0.15 0 0;
+        --sidebar-border: 0.90 0 0;
+        --sidebar-ring: 0.55 0.15 220;
+        
+        /* Custom activist colors */
+        --activist-blue: 0.55 0.15 220;
+        --activist-green: 0.60 0.18 145;
+        --activist-orange: 0.65 0.20 35;
+    }
+
+    .dark {
+        --background: 0.12 0 0;
+        --foreground: 0.95 0 0;
+        --card: 0.15 0 0;
+        --card-foreground: 0.95 0 0;
+        --popover: 0.18 0 0;
+        --popover-foreground: 0.95 0 0;
+        --primary: 0.65 0.18 220;
+        --primary-foreground: 0.12 0 0;
+        --secondary: 0.20 0 0;
+        --secondary-foreground: 0.95 0 0;
+        --muted: 0.22 0 0;
+        --muted-foreground: 0.65 0 0;
+        --accent: 0.25 0 0;
+        --accent-foreground: 0.95 0 0;
+        --destructive: 0.65 0.20 25;
+        --destructive-foreground: 0.12 0 0;
+        --border: 0.25 0 0;
+        --input: 0.25 0 0;
+        --ring: 0.65 0.18 220;
+        --chart-1: 0.65 0.18 220;
+        --chart-2: 0.70 0.20 145;
+        --chart-3: 0.75 0.22 35;
+        --chart-4: 0.60 0.15 280;
+        --chart-5: 0.80 0.18 180;
+        --sidebar: 0.15 0 0;
+        --sidebar-foreground: 0.95 0 0;
+        --sidebar-primary: 0.65 0.18 220;
+        --sidebar-primary-foreground: 0.95 0 0;
+        --sidebar-accent: 0.20 0 0;
+        --sidebar-accent-foreground: 0.95 0 0;
+        --sidebar-border: 0.25 0 0;
+        --sidebar-ring: 0.65 0.18 220;
+        
+        /* Custom activist colors for dark mode */
+        --activist-blue: 0.65 0.18 220;
+        --activist-green: 0.70 0.20 145;
+        --activist-orange: 0.75 0.22 35;
+    }
+
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+}
+
+@layer utilities {
+    .text-activist-blue {
+        color: oklch(var(--activist-blue));
+    }
+    .text-activist-green {
+        color: oklch(var(--activist-green));
+    }
+    .text-activist-orange {
+        color: oklch(var(--activist-orange));
+    }
+    .bg-activist-blue {
+        background-color: oklch(var(--activist-blue));
+    }
+    .bg-activist-green {
+        background-color: oklch(var(--activist-green));
+    }
+    .bg-activist-orange {
+        background-color: oklch(var(--activist-orange));
+    }
+    .border-activist-blue {
+        border-color: oklch(var(--activist-blue));
+    }
+    .border-activist-green {
+        border-color: oklch(var(--activist-green));
+    }
+    .border-activist-orange {
+        border-color: oklch(var(--activist-orange));
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+}

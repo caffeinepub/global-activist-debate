@@ -1,0 +1,55 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Add Pinterest to social media link options in user profiles",
+  "requirements": [
+    {
+      "id": "REQ-22",
+      "summary": "Add Pinterest input field to ProfileSetupModal for new profile creation",
+      "acceptanceCriteria": [
+        "Pinterest input field is displayed in profile setup modal",
+        "Input field accepts Pinterest URL format",
+        "Pinterest link is included when submitting profile creation"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ProfileSetupModal.tsx",
+          "operation": "modify",
+          "description": "Add Pinterest input field to the social media links section alongside existing Twitter, Instagram, LinkedIn, and YouTube fields. Include the field in the form state and submission payload. Maintain consistency with existing social media input styling and layout patterns."
+        }
+      ]
+    },
+    {
+      "id": "REQ-23",
+      "summary": "Display Pinterest link on ProfilePage as clickable social media icon",
+      "acceptanceCriteria": [
+        "Pinterest icon is displayed when a user has a Pinterest link in their profile",
+        "Clicking the Pinterest icon opens the URL in a new browser tab",
+        "Pinterest icon matches the styling of other social media icons"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ProfilePage.tsx",
+          "operation": "modify",
+          "description": "Add Pinterest icon and link to the social media links section displayed on the profile page. Conditionally render the Pinterest icon only when userProfile.socialMedia?.pinterest exists. Style the icon consistently with other social media icons (Twitter, Instagram, LinkedIn, YouTube) and ensure the link opens in a new tab using target='_blank' and rel='noopener noreferrer'."
+        }
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "summary": "Add Pinterest input field to profile editing functionality",
+      "acceptanceCriteria": [
+        "Users can edit their Pinterest link in profile settings",
+        "Changes to Pinterest link are saved to the backend",
+        "Updated Pinterest link is immediately reflected on the profile page"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ProfilePage.tsx",
+          "operation": "modify",
+          "description": "Add Pinterest input field to the inline profile editing form (if profile editing exists inline) or ensure that when editing mode is active, the Pinterest field is editable alongside other social media fields. Ensure the field is included in the profile update payload when saving changes. The updated Pinterest link should be reflected immediately after successful save due to React Query cache invalidation."
+        }
+      ]
+    }
+  ]
+}

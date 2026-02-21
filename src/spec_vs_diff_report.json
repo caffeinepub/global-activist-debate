@@ -1,0 +1,25 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-21T23:13:36.739Z",
+  "summary": "The diff implements Pinterest integration across backend and frontend, adding Pinterest as a social media link option in user profiles. All four requirements (REQ-21 through REQ-24) appear to be fully implemented with backend data model updates, frontend input fields in profile setup and editing, and display on profile pages.",
+  "missing_requirements": [],
+  "hallucinated_features": [
+    {
+      "description": "Migration module for backward compatibility with old user profiles",
+      "reason": "BuildRequest explicitly states 'Existing profiles remain compatible with the schema change' as acceptance criteria, but does not request or specify the creation of a migration module. The added migration.mo file with OldUserProfile/NewUserProfile types and migration logic was not part of the requirements.",
+      "evidence": [
+        "backend/migration.mo"
+      ]
+    }
+  ],
+  "confidence": 0.92,
+  "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "frontend-file-summaries.txt",
+    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/pages/ProfilePage.tsx",
+    "project_state.json"
+  ]
+}

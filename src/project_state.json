@@ -1,0 +1,271 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "Global Activist Debate - A worldwide platform for activists to engage in civil or aggressive debates, share content (quotes/poems), and connect globally. Features user profiles, public debate forums, private messaging, moderation system with warnings/strikes, random debate matching, and mobile-responsive design.",
+  "architectural_notes": [
+    "User authentication and registration system required for global access",
+    "Database schema: users (profiles, debate style, interests), posts (debate threads, content), moderation (warnings, strikes, reports)",
+    "Debate categorization: Civil vs Aggressive with different rule enforcement",
+    "Real-time or near-real-time messaging for private Activist Debate feature",
+    "Moderation dashboard for admins to review reports and manage warnings/strikes/bans",
+    "Random matching algorithm or manual pairing for debate partners",
+    "Responsive frontend framework for cross-device compatibility",
+    "Content moderation queue for reported violations"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-implement-user-authentication-system-using-internet-identity-for-worldwide-access",
+      "title": "Implement user authentication system using Internet Identity for worldwide access",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-profile-management-ui-where-users-can-view-and-edit-their-username-upload-avatar-select-activist-interests-from-predefined-topics-choose-debate-style-from-dropdown-civil-aggressive-creative-random-and-add-optional-social-media-links",
+      "title": "Build profile management UI where users can view and edit their username, upload avatar, select activist interests from predefined topics, choose debate style from dropdown (Civil/Aggressive/Creative/Random), and add optional social media links",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-like-reaction-functionality-to-posts-and-replies-tracking-which-users-reacted-and-displaying-reaction-counts",
+      "title": "Add like/reaction functionality to posts and replies, tracking which users reacted and displaying reaction counts",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-homepage-feed-displaying-posts-from-all-four-public-sections-civil-debate-aggressive-debate-quotes-poems-random-debates-with-pinned-posts-shown-prominently-at-top-and-platform-rules-highlighted-in-a-dedicated-section",
+      "title": "Build homepage feed displaying posts from all four public sections (Civil Debate, Aggressive Debate, Quotes & Poems, Random Debates), with pinned posts shown prominently at top, and platform rules highlighted in a dedicated section",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-section-specific-views-for-civil-debate-aggressive-debate-quotes-poems-and-random-debates-where-users-can-filter-to-see-only-posts-from-that-category-and-create-new-posts-within-that-section",
+      "title": "Create section-specific views for Civil Debate, Aggressive Debate, Quotes & Poems, and Random Debates where users can filter to see only posts from that category and create new posts within that section",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-private-messaging-ui-showing-conversation-list-message-threads-with-timestamps-and-author-identification-ability-to-start-new-conversations-by-selecting-users-and-invite-additional-users-to-group-conversations",
+      "title": "Build private messaging UI showing conversation list, message threads with timestamps and author identification, ability to start new conversations by selecting users, and invite additional users to group conversations",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-user-reporting-system-where-users-can-report-posts-replies-or-user-profiles-for-rule-violations-with-reports-stored-containing-reporter-reported-content-user-violation-type-description-and-status-pending-reviewed-resolved",
+      "title": "Implement user reporting system where users can report posts, replies, or user profiles for rule violations, with reports stored containing reporter, reported content/user, violation type, description, and status (pending/reviewed/resolved)",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-moderator-dashboard-showing-all-pending-reports-user-violation-history-ability-to-issue-warnings-strikes-bans-delete-posts-replies-and-mute-users-with-enforcement-of-3-warning-then-strike-1-strike-then-ban-on-next-warning-progression",
+      "title": "Build moderator dashboard showing all pending reports, user violation history, ability to issue warnings/strikes/bans, delete posts/replies, and mute users, with enforcement of 3-warning-then-strike, 1-strike-then-ban-on-next-warning progression",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-random-debate-matching-system-where-users-can-opt-in-for-random-partner-matching-select-debate-style-preference-civil-aggressive-and-be-paired-with-another-available-user-initiating-a-private-activist-debate-conversation",
+      "title": "Create random debate matching system where users can opt-in for random partner matching, select debate style preference (Civil/Aggressive), and be paired with another available user, initiating a private Activist Debate conversation",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-follow-functionality-where-users-can-follow-other-users-or-specific-topics-with-followed-content-prioritized-or-filtered-in-feeds",
+      "title": "Implement follow functionality where users can follow other users or specific topics, with followed content prioritized or filtered in feeds",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-design-and-implement-energetic-yet-serious-visual-theme-using-shades-of-blue-green-and-orange-with-modern-typography-empowering-layout-patterns-and-a-clean-inclusive-aesthetic-suitable-for-activist-discourse",
+      "title": "Design and implement energetic yet serious visual theme using shades of blue, green, and orange, with modern typography, empowering layout patterns, and a clean, inclusive aesthetic suitable for activist discourse",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-ui-components-are-fully-responsive-and-mobile-friendly-optimized-for-access-from-any-device-with-a-browser-worldwide",
+      "title": "Ensure all UI components are fully responsive and mobile-friendly, optimized for access from any device with a browser worldwide",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-platform-rules-prominently-on-homepage-and-in-each-section-stating-1-no-personal-attacks-2-opinions-only-never-insult-the-person-3-civil-debates-respectful-no-cursing-4-aggressive-debates-cursing-allowed-about-topics-not-individuals",
+      "title": "Display platform rules prominently on homepage and in each section, stating: (1) No personal attacks, (2) Opinions only, never insult the person, (3) Civil debates: respectful, no cursing, (4) Aggressive debates: cursing allowed about topics, not individuals",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-clickable-user-profiles-throughout-the-app-allowing-users-to-view-any-profile-from-posts-replies-debates-or-participant-lists",
+      "title": "Implement clickable user profiles throughout the app, allowing users to view any profile from posts, replies, debates, or participant lists",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-debate-style-indicator-next-to-usernames-in-debate-threads-so-participants-can-see-whether-they-are-in-civil-aggressive-creative-or-random-style-conversations",
+      "title": "Display debate style indicator next to usernames in debate threads so participants can see whether they are in Civil, Aggressive, Creative, or Random style conversations",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-pinterest-input-field-to-the-profilesetupmodal-component-where-users-can-enter-their-pinterest-profile-url-alongside-existing-social-media-links-twitter-instagram-linkedin-youtube",
+      "title": "Add Pinterest input field to the ProfileSetupModal component where users can enter their Pinterest profile URL alongside existing social media links (Twitter, Instagram, LinkedIn, YouTube)",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-pinterest-link-on-the-profilepage-component-as-a-clickable-social-media-icon-alongside-other-social-links-twitter-instagram-linkedin-youtube-opening-the-pinterest-profile-in-a-new-tab-when-clicked",
+      "title": "Display the Pinterest link on the ProfilePage component as a clickable social media icon alongside other social links (Twitter, Instagram, LinkedIn, YouTube), opening the Pinterest profile in a new tab when clicked",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-pinterest-input-field-to-profile-editing-functionality-allowing-users-to-add-or-update-their-pinterest-profile-url-after-initial-profile-creation",
+      "title": "Add Pinterest input field to profile editing functionality, allowing users to add or update their Pinterest profile URL after initial profile creation",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "User profiles with username, avatar, activist interests, debate style, and social links",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Public content sections: Civil Debate, Aggressive Debate, Quotes & Poems, Random Debates/Looking for Partner",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Private messaging system (Activist Debate) for 1-on-1 and group conversations",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Moderation system with warnings (3), strikes (1), and ban capability; user reporting and moderator tools",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Random debate matching feature with civil/aggressive style selection",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Posting features: text/images/links, replies, likes/reactions, pinning, follow users/topics",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Homepage with debate feed, pinned rules, featured content, and Random Debate button",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Mobile-friendly, fully responsive design accessible worldwide",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Create user profile data model storing username, avatar URL, activist interests (array of strings), debate style (Civil/Aggressive/Creative/Random), and optional social media links",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Create post data model supporting four content types: Civil Debate threads, Aggressive Debate threads, Quotes & Poems, and Random Debates/Looking for Partner posts, with fields for author, content (text/image URLs/links), timestamp, section type, and pinned status",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Implement reply/comment system where users can reply to posts in any section, with replies storing parent post reference, author, content, and timestamp",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Implement private messaging system (labeled 'Activist Debate') supporting 1-on-1 and group conversations, with conversation data model storing participants, messages with timestamps and authors, and conversation type (direct/group)",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Create moderation data model tracking warnings, strikes, and bans per user, with fields for violation type, timestamp, moderator action, and violation description",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Add Pinterest to social media link options in user profiles",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Update the UserProfile data model in backend/main.mo to include a Pinterest link field in the socialMediaLinks record, storing the Pinterest profile URL as an optional Text value",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Global Activist Debate",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

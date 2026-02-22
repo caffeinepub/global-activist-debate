@@ -2,10 +2,14 @@ import { useGetPosts } from '../hooks/useQueries';
 import PostFeed from '../components/PostFeed';
 import PlatformRules from '../components/PlatformRules';
 import RandomDebateButton from '../components/RandomDebateButton';
+import CreatePostForm from '../components/CreatePostForm';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SectionType } from '../backend';
+import { useInternetIdentity } from '../hooks/useInternetIdentity';
 
 export default function HomePage() {
   const { data: posts = [], isLoading } = useGetPosts();
+  const { identity } = useInternetIdentity();
 
   return (
     <div className="relative">
@@ -28,6 +32,7 @@ export default function HomePage() {
           {/* Feed */}
           <div className="lg:col-span-2 space-y-6">
             <h2 className="text-2xl font-bold">Latest Discussions</h2>
+            {identity && <CreatePostForm section={SectionType.civilDebate} />}
             {isLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3].map((i) => (

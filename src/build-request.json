@@ -1,92 +1,75 @@
 {
   "kind": "build_request",
-  "title": "Fix missing profile icon in header and replace avatar with letter-in-circle design",
+  "title": "Add post creation functionality to all sections",
   "projectName": "Global Activist Debate",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-54",
-      "text": "Fix the profile icon button visibility issue in the Layout component header so it displays correctly for authenticated users",
+      "id": "REQ-58",
+      "text": "Update the HomePage component to display the CreatePostForm above the post feed, allowing authenticated users to create posts that appear in the general feed without specifying a section",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-latest"
+          "msg-last"
         ],
         "quotes": [
-          "So the profile icon is not showing up"
+          "You didn't add a way to post anything"
         ]
       },
       "acceptanceCriteria": [
-        "Profile icon button is visible in the header for authenticated users",
-        "Icon appears in the correct position between navigation items and LoginButton",
-        "No console errors related to the profile icon rendering"
+        "CreatePostForm appears on HomePage above the post feed",
+        "Form is only visible to authenticated users",
+        "Posts created from HomePage appear in the general feed",
+        "Form follows the same styling and behavior as the section-specific CreatePostForm"
       ]
     },
     {
-      "id": "REQ-55",
-      "text": "Replace all avatar displays throughout the application with a simple letter-in-circle design showing the first letter of the username on a colored background circle, removing all avatar customization functionality",
+      "id": "REQ-59",
+      "text": "Verify that the CreatePostForm component is properly integrated into the SectionPage component for Civil Debate, Aggressive Debate, Quotes & Poems, and Random Debates sections, ensuring authenticated users can create section-specific posts",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-latest"
+          "msg-last"
         ],
         "quotes": [
-          "Don't put the avatar option. I just want like the letter in the background circle option no avatar. I repeat no avatar."
+          "You didn't add a way to post anything"
         ]
       },
       "acceptanceCriteria": [
-        "Profile icon displays first letter of username in a colored circle",
-        "UserLink component shows letter-in-circle instead of custom avatar",
-        "ProfilePage displays letter-in-circle instead of custom avatar",
-        "All instances of AvatarPreview component are replaced with letter-in-circle design",
-        "Avatar customization is completely removed from profile setup and editing flows",
-        "No references to AvatarBuilder or AvatarPreview components remain in active UI"
+        "CreatePostForm is visible on all four section pages (Civil Debate, Aggressive Debate, Quotes & Poems, Random Debates)",
+        "Form is only visible to authenticated users",
+        "Posts created from section pages are automatically tagged with the correct section type",
+        "Form submission successfully creates posts that appear in the section-specific feed"
       ]
     },
     {
-      "id": "REQ-56",
-      "text": "Remove the AvatarBuilder component from ProfileSetupModal and ProfileEditModal, eliminating all avatar customization UI",
+      "id": "REQ-60",
+      "text": "Add visual feedback and success messaging to the CreatePostForm component so users receive confirmation when their post is successfully created, including clearing the form fields and optionally scrolling to show the new post in the feed",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-latest"
-        ],
-        "quotes": [
-          "just no avatar"
+          "msg-last"
         ]
       },
       "acceptanceCriteria": [
-        "ProfileSetupModal no longer includes AvatarBuilder",
-        "ProfileEditModal no longer includes AvatarBuilder",
-        "Profile creation and editing work without avatar customization steps",
-        "No broken UI elements where avatar builder was previously displayed"
-      ]
-    },
-    {
-      "id": "REQ-57",
-      "text": "Update the UserProfile data model in backend/main.mo to remove avatar-related fields (avatar customization data) since avatars are no longer used",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-user-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "UserProfile type no longer contains avatar or avatarCustomization fields",
-        "Profile creation and update functions work without avatar data",
-        "Existing profiles can be read without errors even if they contain old avatar data"
+        "Success toast notification appears when post is created successfully",
+        "Form fields clear after successful submission",
+        "User receives clear feedback if post creation fails",
+        "Optional: Page scrolls to show the newly created post in the feed"
       ]
     }
   ],
   "constraints": [
-    "Do not include any avatar customization functionality",
-    "Maintain all other existing profile features (username, interests, debate style, social links)",
-    "Keep the single-actor backend architecture"
+    "Do not modify backend/main.mo - post creation logic already exists",
+    "Do not modify the CreatePostForm component structure - it already exists and handles post creation",
+    "Maintain the current authentication flow using Internet Identity",
+    "Keep the section-specific post tagging mechanism that already exists"
   ],
   "nonGoals": [
-    "Creating new avatar customization options",
-    "Preserving the AvatarBuilder or AvatarPreview components",
-    "Supporting custom avatar images or uploads"
+    "Changing the post data model or backend logic",
+    "Adding new post types beyond the existing four sections",
+    "Modifying the authentication system",
+    "Redesigning the CreatePostForm component interface"
   ],
   "imageRequirements": {
     "required": [],

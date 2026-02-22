@@ -1,12 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Fix profile icon visibility and replace all avatar displays with simple letter-in-circle design.
+**Goal:** Enable post creation functionality across all sections of the Global Activist Debate platform.
 
 **Planned changes:**
-- Fix profile icon button not showing in header for authenticated users
-- Replace all avatar displays with letter-in-circle showing first letter of username on colored background
-- Remove AvatarBuilder component from ProfileSetupModal and ProfileEditModal
-- Remove avatar-related fields from UserProfile data model in backend
+- Add CreatePostForm to HomePage above the post feed for general posts
+- Verify CreatePostForm integration on all section pages (Civil Debate, Aggressive Debate, Quotes & Poems, Random Debates)
+- Add success feedback, form clearing, and error handling to post creation flow
 
-**User-visible outcome:** Users see a profile icon in the header and all user avatars display as a simple letter in a colored circle throughout the application, with no avatar customization options.
+**User-visible outcome:** Authenticated users can create posts from the homepage and all section pages, receiving clear feedback when posts are successfully published or if errors occur.

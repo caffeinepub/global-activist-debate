@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fix-the-profile-icon-button-visibility-issue-in-the-layout-component-header-so-it-displays-correctly-for-authenticated-users",
-      "featureTitle": "Fix the profile icon button visibility issue in the Layout component header so it displays correctly for authenticated users",
+      "featureId": "feature-update-the-homepage-component-to-display-the-createpostform-above-the-post-feed-allowing-authenticated-users-to-create-posts-that-appear-in-the-general-feed-without-specifying-a-section",
+      "featureTitle": "Update the HomePage component to display the CreatePostForm above the post feed, allowing authenticated users to create posts that appear in the general feed without specifying a section",
       "files": [
-        "frontend/src/components/Layout.tsx"
+        "frontend/src/pages/HomePage.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -17,18 +17,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-54"
+        "REQ-58"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-replace-all-avatar-displays-throughout-the-application-with-a-simple-letter-in-circle-design-showing-the-first-letter-of-the-username-on-a-colored-background-circle-removing-all-avatar-customization-functionality",
-      "featureTitle": "Replace all avatar displays throughout the application with a simple letter-in-circle design showing the first letter of the username on a colored background circle, removing all avatar customization functionality",
+      "featureId": "feature-add-visual-feedback-and-success-messaging-to-the-createpostform-component-so-users-receive-confirmation-when-their-post-is-successfully-created-including-clearing-the-form-fields-and-optionally-scrolling-to-show-the-new-post-in-the-feed",
+      "featureTitle": "Add visual feedback and success messaging to the CreatePostForm component so users receive confirmation when their post is successfully created, including clearing the form fields and optionally scrolling to show the new post in the feed",
       "files": [
-        "frontend/src/components/Layout.tsx",
-        "frontend/src/components/UserAvatar.tsx",
-        "frontend/src/components/UserLink.tsx",
-        "frontend/src/pages/ProfilePage.tsx"
+        "frontend/src/components/CreatePostForm.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -40,28 +37,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-55"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-remove-the-avatarbuilder-component-from-profilesetupmodal-and-profileeditmodal-eliminating-all-avatar-customization-ui",
-      "featureTitle": "Remove the AvatarBuilder component from ProfileSetupModal and ProfileEditModal, eliminating all avatar customization UI",
-      "files": [
-        "frontend/src/components/ProfileEditModal.tsx",
-        "frontend/src/components/ProfileSetupModal.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-56"
+        "REQ-60"
       ],
       "confidence": "high"
     }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 23,
+  "projectStateVersion": 25,
   "summary": "Global Activist Debate - A worldwide platform for activists to engage in civil or aggressive debates, share content (quotes/poems), and connect globally. Features user profiles, public debate forums, private messaging, moderation system with warnings/strikes, random debate matching, and mobile-responsive design.",
   "architectural_notes": [
     "User authentication and registration system required for global access",
@@ -16,7 +16,8 @@
   ],
   "known_issues": [
     "Avatar builder background color does not change when selected",
-    "Avatar design does not match reference aesthetic - characters look ugly and should have no eyes or face, only hair, clothing, and skin tone like the provided reference image"
+    "Avatar design does not match reference aesthetic - characters look ugly and should have no eyes or face, only hair, clothing, and skin tone like the provided reference image",
+    "No UI exists for users to create new posts in any section"
   ],
   "isFixRequest": true,
   "existing_features": [
@@ -343,6 +344,22 @@
         "REQ-56"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-homepage-component-to-display-the-createpostform-above-the-post-feed-allowing-authenticated-users-to-create-posts-that-appear-in-the-general-feed-without-specifying-a-section",
+      "title": "Update the HomePage component to display the CreatePostForm above the post feed, allowing authenticated users to create posts that appear in the general feed without specifying a section",
+      "reqIds": [
+        "REQ-58"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-visual-feedback-and-success-messaging-to-the-createpostform-component-so-users-receive-confirmation-when-their-post-is-successfully-created-including-clearing-the-form-fields-and-optionally-scrolling-to-show-the-new-post-in-the-feed",
+      "title": "Add visual feedback and success messaging to the CreatePostForm component so users receive confirmation when their post is successfully created, including clearing the form fields and optionally scrolling to show the new post in the feed",
+      "reqIds": [
+        "REQ-60"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -531,6 +548,20 @@
       "summary": "Update the UserProfile data model in backend/main.mo to remove avatar-related fields (avatar customization data) since avatars are no longer used",
       "reqIds": [
         "REQ-57"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-53",
+      "summary": "Add UI for creating posts in Civil Debate, Aggressive Debate, Quotes & Poems, and Random Debates sections",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-55",
+      "summary": "Verify that the CreatePostForm component is properly integrated into the SectionPage component for Civil Debate, Aggressive Debate, Quotes & Poems, and Random Debates sections, ensuring authenticated users can create section-specific posts",
+      "reqIds": [
+        "REQ-59"
       ],
       "status": "pending"
     }

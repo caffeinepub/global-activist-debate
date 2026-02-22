@@ -1,77 +1,56 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix missing profile icon in header and replace avatar with letter-in-circle design",
+  "title": "Add post creation functionality to all sections",
   "requirements": [
     {
-      "id": "REQ-54",
-      "summary": "Fix the profile icon button visibility issue in the Layout component header so it displays correctly for authenticated users",
+      "id": "REQ-58",
+      "summary": "Display CreatePostForm on HomePage above the post feed for authenticated users to create general posts",
       "acceptanceCriteria": [
-        "Profile icon button is visible in the header for authenticated users",
-        "Icon appears in the correct position between navigation items and LoginButton",
-        "No console errors related to the profile icon rendering"
+        "CreatePostForm appears on HomePage above the post feed",
+        "Form is only visible to authenticated users",
+        "Posts created from HomePage appear in the general feed",
+        "Form follows the same styling and behavior as the section-specific CreatePostForm"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/Layout.tsx",
+          "path": "frontend/src/pages/HomePage.tsx",
           "operation": "modify",
-          "description": "Fix the profile icon button rendering logic to ensure it displays correctly for authenticated users. Verify the conditional rendering checks for isAuthenticated and identity states, and ensure proper positioning between navigation items and LoginButton. Review and fix any issues preventing the profile icon from appearing in the header."
+          "description": "Add CreatePostForm component above the post feed section. Import and render CreatePostForm with appropriate props to create posts without a specific section. Ensure the form is only visible when the user is authenticated using the authorization component's useInternetIdentity hook. Position the form in the main content area above the existing post feed, maintaining the current two-column layout with rules sidebar. Pass appropriate section prop (or null/default) to CreatePostForm to indicate general feed posts."
         }
       ]
     },
     {
-      "id": "REQ-55",
-      "summary": "Replace all avatar displays throughout the application with a simple letter-in-circle design showing the first letter of the username on a colored background circle, removing all avatar customization functionality",
+      "id": "REQ-59",
+      "summary": "Verify CreatePostForm integration in all section pages for authenticated users to create section-specific posts",
       "acceptanceCriteria": [
-        "Profile icon displays first letter of username in a colored circle",
-        "UserLink component shows letter-in-circle instead of custom avatar",
-        "ProfilePage displays letter-in-circle instead of custom avatar",
-        "All instances of AvatarPreview component are replaced with letter-in-circle design",
-        "Avatar customization is completely removed from profile setup and editing flows",
-        "No references to AvatarBuilder or AvatarPreview components remain in active UI"
+        "CreatePostForm is visible on all four section pages (Civil Debate, Aggressive Debate, Quotes & Poems, Random Debates)",
+        "Form is only visible to authenticated users",
+        "Posts created from section pages are automatically tagged with the correct section type",
+        "Form submission successfully creates posts that appear in the section-specific feed"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/UserAvatar.tsx",
-          "operation": "create",
-          "description": "Create a new UserAvatar component that displays a letter-in-circle design. The component should take a username prop, extract the first letter, display it in uppercase on a colored circle background, and generate consistent background colors based on the username using a hash function for color selection. Include size variants (small, medium, large) and proper styling with Tailwind CSS."
-        },
-        {
-          "path": "frontend/src/components/Layout.tsx",
+          "path": "frontend/src/pages/SectionPage.tsx",
           "operation": "modify",
-          "description": "Replace the profile icon in the header with the new UserAvatar component showing the letter-in-circle design. Import and use the UserAvatar component, passing the current user's username from their profile. Ensure proper sizing and alignment within the header layout."
-        },
-        {
-          "path": "frontend/src/components/UserLink.tsx",
-          "operation": "modify",
-          "description": "Replace the AvatarPreview component usage with the new UserAvatar component. Remove all imports and references to AvatarPreview and avatar customization data. Update the component to display the letter-in-circle design by passing the username to UserAvatar."
-        },
-        {
-          "path": "frontend/src/pages/ProfilePage.tsx",
-          "operation": "modify",
-          "description": "Replace the AvatarPreview component with the new UserAvatar component in the profile display section. Remove all avatar customization display logic and related imports. Update the profile header to show the letter-in-circle design with appropriate sizing for the profile page."
+          "description": "Review and verify that CreatePostForm is properly integrated into the SectionPage component for all four sections (Civil Debate, Aggressive Debate, Quotes & Poems, Random Debates). Ensure the form is conditionally rendered only for authenticated users using the authorization component's useInternetIdentity hook. Verify that the section prop passed to CreatePostForm correctly maps to the section type from the route params so posts are automatically tagged with the correct section. Confirm the form appears above the post feed and follows consistent styling across all sections."
         }
       ]
     },
     {
-      "id": "REQ-56",
-      "summary": "Remove the AvatarBuilder component from ProfileSetupModal and ProfileEditModal, eliminating all avatar customization UI",
+      "id": "REQ-60",
+      "summary": "Add visual feedback and success messaging to CreatePostForm with form clearing and optional scroll behavior",
       "acceptanceCriteria": [
-        "ProfileSetupModal no longer includes AvatarBuilder",
-        "ProfileEditModal no longer includes AvatarBuilder",
-        "Profile creation and editing work without avatar customization steps",
-        "No broken UI elements where avatar builder was previously displayed"
+        "Success toast notification appears when post is created successfully",
+        "Form fields clear after successful submission",
+        "User receives clear feedback if post creation fails",
+        "Optional: Page scrolls to show the newly created post in the feed"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ProfileSetupModal.tsx",
+          "path": "frontend/src/components/CreatePostForm.tsx",
           "operation": "modify",
-          "description": "Remove the AvatarBuilder component and all avatar customization logic from the profile setup flow. Remove avatar-related imports, state management, and form fields. Update the modal layout to remove the avatar section, ensuring the remaining fields (username, interests, debate style, social media links) flow properly without broken spacing or layout issues."
-        },
-        {
-          "path": "frontend/src/components/ProfileEditModal.tsx",
-          "operation": "modify",
-          "description": "Remove the AvatarBuilder component and all avatar customization logic from the profile editing flow. Remove avatar-related imports, state management, and form fields. Ensure the profile data passed to saveCallerUserProfile no longer includes avatar customization fields. Update the modal layout to remove the avatar section while maintaining proper spacing and layout for remaining fields."
+          "description": "Add success and error handling to the CreatePostForm component. Import and use the toast notification system (already wired via Toaster in App.tsx) to display success messages when posts are created successfully. Clear all form fields (content textarea and image upload) after successful submission. Display error toast notifications with appropriate messages when post creation fails. Optionally implement scroll behavior to show the newly created post in the feed after successful submission. Ensure the form properly handles loading states during submission and prevents multiple submissions."
         }
       ]
     }

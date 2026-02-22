@@ -1,9 +1,10 @@
 import { Outlet, useNavigate } from '@tanstack/react-router';
-import { Menu, MessageSquare, Shield, X } from 'lucide-react';
+import { Menu, MessageSquare, Shield, User, X, Info } from 'lucide-react';
 import { useState } from 'react';
 import { SiFacebook, SiX, SiInstagram } from 'react-icons/si';
 import LoginButton from './LoginButton';
 import SectionNavigation from './SectionNavigation';
+import HelpModal from './HelpModal';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
@@ -14,7 +15,15 @@ export default function Layout() {
   const { identity } = useInternetIdentity();
   const isAuthenticated = !!identity;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [helpModalOpen, setHelpModalOpen] = useState(false);
   const { data: isAdmin } = useIsAdmin();
+
+  const handleProfileClick = () => {
+    if (identity) {
+      const principal = identity.getPrincipal().toString();
+      navigate({ to: '/profile/$userId', params: { userId: principal } });
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -36,6 +45,15 @@ export default function Layout() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setHelpModalOpen(true)}
+              className="gap-2"
+            >
+              <img src="/assets/generated/info-icon.dim_48x48.png" alt="Help" className="h-4 w-4" />
+              Help
+            </Button>
             {isAuthenticated && (
               <>
                 <Button
@@ -58,6 +76,15 @@ export default function Layout() {
                     Moderator
                   </Button>
                 )}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleProfileClick}
+                  className="gap-2"
+                >
+                  <User className="h-4 w-4" />
+                  Profile
+                </Button>
               </>
             )}
             <LoginButton />
@@ -73,6 +100,17 @@ export default function Layout() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px]">
                 <div className="flex flex-col gap-4 mt-8">
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      setHelpModalOpen(true);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="justify-start gap-2"
+                  >
+                    <img src="/assets/generated/info-icon.dim_48x48.png" alt="Help" className="h-4 w-4" />
+                    Help
+                  </Button>
                   {isAuthenticated && (
                     <>
                       <Button
@@ -99,6 +137,17 @@ export default function Layout() {
                           Moderator
                         </Button>
                       )}
+                      <Button
+                        variant="ghost"
+                        onClick={() => {
+                          handleProfileClick();
+                          setMobileMenuOpen(false);
+                        }}
+                        className="justify-start gap-2"
+                      >
+                        <User className="h-4 w-4" />
+                        Profile
+                      </Button>
                     </>
                   )}
                   <LoginButton />
@@ -116,6 +165,9 @@ export default function Layout() {
       <main className="flex-1">
         <Outlet />
       </main>
+
+      {/* Help Modal */}
+      <HelpModal open={helpModalOpen} onClose={() => setHelpModalOpen(false)} />
 
       {/* Footer */}
       <footer className="border-t bg-muted/30 mt-auto">

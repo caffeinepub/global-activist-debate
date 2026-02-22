@@ -10,6 +10,30 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
+export interface AvatarColorChoice {
+  'colorType' : AvatarColorType,
+  'colorId' : bigint,
+}
+export type AvatarColorType = { 'skinToneLevel' : null } |
+  { 'clothingColor' : null } |
+  { 'hairColor' : null };
+export interface AvatarCustomization {
+  'clothing' : [] | [AvatarStyleChoice],
+  'eyewear' : [] | [AvatarStyleChoice],
+  'skinTone' : AvatarColorChoice,
+  'hairType' : AvatarStyleChoice,
+}
+export interface AvatarStyleChoice {
+  'id' : bigint,
+  'styleType' : AvatarStyleType,
+}
+export type AvatarStyleType = { 'hat' : null } |
+  { 'wig' : null } |
+  { 'glasses' : null } |
+  { 'cape' : null } |
+  { 'hair' : null } |
+  { 'shirt' : null } |
+  { 'beard' : null };
 export interface Conversation {
   'id' : bigint,
   'participants' : Array<Principal>,
@@ -92,7 +116,7 @@ export interface UserProfile {
   'interests' : Array<string>,
   'socialMedia' : [] | [SocialMediaLinks],
   'debateStyle' : DebateStyle,
-  'avatar' : [] | [ExternalBlob],
+  'avatar' : AvatarCustomization,
 }
 export type UserRole = { 'admin' : null } |
   { 'user' : null } |

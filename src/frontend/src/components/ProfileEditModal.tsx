@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useInternetIdentity } from '../hooks/useInternetIdentity';
+import { useState, useEffect } from 'react';
 import { useGetCallerUserProfile, useSaveCallerUserProfile } from '../hooks/useQueries';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -10,11 +9,16 @@ import { Textarea } from '@/components/ui/textarea';
 import { Loader2 } from 'lucide-react';
 import { DebateStyle, AvatarCustomization, AvatarColorType, AvatarStyleType } from '../backend';
 import AvatarBuilder from './AvatarBuilder';
+import { useInternetIdentity } from '../hooks/useInternetIdentity';
 
-export default function ProfileSetupModal() {
+interface ProfileEditModalProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+export default function ProfileEditModal({ open, onClose }: ProfileEditModalProps) {
   const { identity } = useInternetIdentity();
-  const isAuthenticated = !!identity;
-  const { data: userProfile, isLoading: profileLoading, isFetched } = useGetCallerUserProfile();
+  const { data: userProfile } = useGetCallerUserProfile();
   const saveProfile = useSaveCallerUserProfile();
 
   const [username, setUsername] = useState('');
@@ -37,7 +41,18 @@ export default function ProfileSetupModal() {
     clothing: undefined,
   });
 
-  const showProfileSetup = isAuthenticated && !profileLoading && isFetched && userProfile === null;
+  useEffect(() => {
+    if (userProfile) {
+      setUsername(userProfile.username);
+      setInterests(userProfile.interests.join(', '));
+      setDebateStyle(userProfile.debateStyle);
+      setFacebook(userProfile.socialMedia?.facebook || '');
+      setTwitter(userProfile.socialMedia?.twitter || '');
+      setInstagram(userProfile.socialMedia?.instagram || '');
+      setPinterest(userProfile.socialMedia?.pinterest || '');
+      setAvatar(userProfile.avatar);
+    }
+  }, [userProfile]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,16 +81,16 @@ export default function ProfileSetupModal() {
       debateStyle,
       socialMedia,
     });
+
+    onClose();
   };
 
-  if (!showProfileSetup) return null;
-
   return (
-    <Dialog open={showProfileSetup}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto" onPointerDownOutside={(e) => e.preventDefault()}>
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Welcome to Global Activist Debate!</DialogTitle>
-          <DialogDescription>Let's set up your profile to get started.</DialogDescription>
+          <DialogTitle>Edit Your Profile</DialogTitle>
+          <DialogDescription>Update your activist profile information.</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -143,16 +158,21 @@ export default function ProfileSetupModal() {
             />
           </div>
 
-          <Button type="submit" className="w-full" disabled={saveProfile.isPending || !username.trim()}>
-            {saveProfile.isPending ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creating Profile...
-              </>
-            ) : (
-              'Create Profile'
-            )}
-          </Button>
+          <div className="flex gap-3">
+            <Button type="button" variant="outline" onClick={onClose} className="flex-1">
+              Cancel
+            </Button>
+            <Button type="submit" className="flex-1" disabled={saveProfile.isPending || !username.trim()}>
+              {saveProfile.isPending ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                'Save Changes'
+              )}
+            </Button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

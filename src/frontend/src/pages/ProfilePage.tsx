@@ -1,22 +1,30 @@
 import { useParams } from '@tanstack/react-router';
 import { Principal } from '@icp-sdk/core/principal';
 import { useGetUserProfile, useGetPosts } from '../hooks/useQueries';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Edit } from 'lucide-react';
 import DebateStyleBadge from '../components/DebateStyleBadge';
 import FollowButton from '../components/FollowButton';
 import PostFeed from '../components/PostFeed';
+import AvatarPreview from '../components/AvatarPreview';
+import ProfileEditModal from '../components/ProfileEditModal';
 import { SiFacebook, SiX, SiInstagram, SiPinterest } from 'react-icons/si';
+import { useInternetIdentity } from '../hooks/useInternetIdentity';
+import { useState } from 'react';
 
 export default function ProfilePage() {
   const { userId } = useParams({ from: '/profile/$userId' });
   const principal = Principal.fromText(userId);
   const { data: profile, isLoading: profileLoading } = useGetUserProfile(principal);
   const { data: allPosts = [] } = useGetPosts();
+  const { identity } = useInternetIdentity();
+  const [editModalOpen, setEditModalOpen] = useState(false);
 
   const userPosts = allPosts.filter((p) => p.author.toString() === userId);
+  const isOwnProfile = identity?.getPrincipal().toString() === userId;
 
   if (profileLoading) {
     return (
@@ -46,27 +54,38 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <div className="flex items-start justify-between">
-                <div className="flex items-center gap-4">
-                  <Avatar className="h-20 w-20">
-                    {profile.avatar && <AvatarImage src={profile.avatar.getDirectURL()} />}
-                    <AvatarFallback className="text-2xl">{profile.username[0]?.toUpperCase()}</AvatarFallback>
-                  </Avatar>
-                  <div>
+                <div className="flex flex-col items-center gap-4 w-full">
+                  <div className="h-32 w-32">
+                    <AvatarPreview avatar={profile.avatar} size="large" />
+                  </div>
+                  <div className="text-center">
                     <CardTitle className="text-2xl">{profile.username}</CardTitle>
-                    <DebateStyleBadge style={profile.debateStyle} />
+                    <div className="mt-2">
+                      <DebateStyleBadge style={profile.debateStyle} />
+                    </div>
                   </div>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <FollowButton userId={principal} />
+              {isOwnProfile && (
+                <Button
+                  variant="outline"
+                  className="w-full gap-2"
+                  onClick={() => setEditModalOpen(true)}
+                >
+                  <Edit className="h-4 w-4" />
+                  Edit Profile
+                </Button>
+              )}
+              {!isOwnProfile && <FollowButton userId={principal} />}
 
               {profile.interests.length > 0 && (
                 <div>
                   <h3 className="font-semibold mb-2">Interests</h3>
                   <div className="flex flex-wrap gap-2">
-                    {profile.interests.map((interest, i) => (
-                      <Badge key={i} variant="secondary">
+                    {profile.interests.map((interest, idx) => (
+                      <Badge key={idx} variant="secondary">
                         {interest}
                       </Badge>
                     ))}
@@ -125,12 +144,15 @@ export default function ProfilePage() {
           </Card>
         </div>
 
-        {/* User Posts */}
-        <div className="lg:col-span-2 space-y-6">
-          <h2 className="text-2xl font-bold">Posts by {profile.username}</h2>
+        {/* Posts */}
+        <div className="lg:col-span-2">
+          <h2 className="text-2xl font-bold mb-6">Posts by {profile.username}</h2>
           <PostFeed posts={userPosts} />
         </div>
       </div>
+
+      {/* Edit Profile Modal */}
+      <ProfileEditModal open={editModalOpen} onClose={() => setEditModalOpen(false)} />
     </div>
   );
 }

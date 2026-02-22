@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 5,
+  "projectStateVersion": 13,
   "summary": "Global Activist Debate - A worldwide platform for activists to engage in civil or aggressive debates, share content (quotes/poems), and connect globally. Features user profiles, public debate forums, private messaging, moderation system with warnings/strikes, random debate matching, and mobile-responsive design.",
   "architectural_notes": [
     "User authentication and registration system required for global access",
@@ -10,10 +10,15 @@
     "Moderation dashboard for admins to review reports and manage warnings/strikes/bans",
     "Random matching algorithm or manual pairing for debate partners",
     "Responsive frontend framework for cross-device compatibility",
-    "Content moderation queue for reported violations"
+    "Content moderation queue for reported violations",
+    "Avatar customization system with options for skin tones, hair types, and other visual personalization",
+    "Help/info system with animated UI and contextual usage guidance"
   ],
-  "known_issues": [],
-  "isFixRequest": false,
+  "known_issues": [
+    "No visible profile icon or navigation element for users to access their own profile page",
+    "Avatar builder feature is glitchy and has usability/performance issues"
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-implement-user-authentication-system-using-internet-identity-for-worldwide-access",
@@ -158,6 +163,110 @@
         "REQ-24"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-add-a-profile-icon-button-to-the-layout-component-header-that-navigates-authenticated-users-to-their-own-profile-page-profile-principal-currentuserprincipal",
+      "title": "Add a profile icon button to the Layout component header that navigates authenticated users to their own profile page (/profile?principal={currentUserPrincipal})",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-position-the-profile-icon-button-in-the-header-navigation-bar-between-the-existing-navigation-items-and-the-loginbutton-maintaining-consistent-spacing-and-alignment-with-other-header-elements",
+      "title": "Position the profile icon button in the header navigation bar between the existing navigation items and the LoginButton, maintaining consistent spacing and alignment with other header elements",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-customizable-avatar-builder-component-with-options-for-skin-tone-hair-type-facial-features-and-other-personalization-options-allowing-users-to-create-a-cute-personalized-avatar-during-profile-setup-and-profile-editing",
+      "title": "Implement a customizable avatar builder component with options for skin tone, hair type, facial features, and other personalization options, allowing users to create a cute personalized avatar during profile setup and profile editing",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-information-help-icon-button-in-the-top-header-navigation-of-the-layout-component-that-displays-platform-usage-instructions-and-frequently-asked-questions",
+      "title": "Add an information/help icon button in the top header navigation of the Layout component that displays platform usage instructions and frequently asked questions",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-cute-animated-tooltip-or-modal-that-appears-when-the-information-icon-is-clicked-providing-interactive-help-content-answering-common-questions-about-platform-usage-features-and-rules",
+      "title": "Implement a cute animated tooltip or modal that appears when the information icon is clicked, providing interactive help content answering common questions about platform usage, features, and rules",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-all-glitches-and-performance-issues-in-the-avatarbuilder-component-to-ensure-smooth-responsive-interaction-without-lag-errors-or-visual-artifacts-during-customization",
+      "title": "Fix all glitches and performance issues in the AvatarBuilder component to ensure smooth, responsive interaction without lag, errors, or visual artifacts during customization",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-expand-the-avatarbuilder-component-skin-tone-options-to-include-a-comprehensive-range-representing-all-global-skin-tones-and-ethnic-backgrounds",
+      "title": "Expand the AvatarBuilder component skin tone options to include a comprehensive range representing all global skin tones and ethnic backgrounds",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-hijab-options-to-the-avatarbuilder-component-with-multiple-styles-and-colors-allowing-users-to-select-hijab-as-a-head-covering-choice",
+      "title": "Add hijab options to the AvatarBuilder component with multiple styles and colors, allowing users to select hijab as a head covering choice",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-cultural-head-covering-and-scarf-options-to-the-avatarbuilder-component-including-turbans-keffiyehs-durags-headwraps-and-other-traditional-head-coverings-from-diverse-cultures",
+      "title": "Add cultural head covering and scarf options to the AvatarBuilder component, including turbans, keffiyehs, durags, headwraps, and other traditional head coverings from diverse cultures",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-cultural-clothing-options-to-the-avatarbuilder-component-including-traditional-garments-such-as-dashikis-saris-kimonos-hanboks-kaftans-and-other-culturally-significant-attire-from-around-the-world",
+      "title": "Add cultural clothing options to the AvatarBuilder component, including traditional garments such as dashikis, saris, kimonos, hanboks, kaftans, and other culturally significant attire from around the world",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redesign-the-avatar-builder-aesthetic-to-create-more-realistic-mature-character-representations-instead-of-silly-or-overly-cartoonish-designs-maintaining-visual-appeal-while-projecting-seriousness-appropriate-for-activist-discourse",
+      "title": "Redesign the avatar builder aesthetic to create more realistic, mature character representations instead of silly or overly cartoonish designs, maintaining visual appeal while projecting seriousness appropriate for activist discourse",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-avatarpreview-component-to-properly-render-all-new-customization-options-including-hijabs-cultural-head-coverings-and-cultural-clothing-with-accurate-svg-representations-at-all-preview-sizes-small-medium-large",
+      "title": "Update the AvatarPreview component to properly render all new customization options including hijabs, cultural head coverings, and cultural clothing with accurate SVG representations at all preview sizes (small/medium/large)",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-identify-and-resolve-the-compilation-or-deployment-error-that-prevented-the-previous-build-from-successfully-deploying-to-the-internet-computer-network",
+      "title": "Identify and resolve the compilation or deployment error that prevented the previous build from successfully deploying to the Internet Computer network",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -260,6 +369,46 @@
       "summary": "Update the UserProfile data model in backend/main.mo to include a Pinterest link field in the socialMediaLinks record, storing the Pinterest profile URL as an optional Text value",
       "reqIds": [
         "REQ-21"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Add profile icon/button to UI so users can access their own profile page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Implement customizable avatar builder with skin tone, hair type, and other personalization options",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Add information/help icon in the top header with animated tooltip/modal providing platform usage instructions and FAQs",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Update the UserProfile data model in backend/main.mo to store avatar customization choices (skin tone, hair type, and other selected options) so users' custom avatars persist and display consistently across the platform",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Enhance avatar builder with more inclusive options: hijabs, cultural scarves, cultural clothing, expanded skin tones, and more serious character design options representing diverse cultures",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Update the AvatarCustomization type in backend/main.mo to support new fields for hijabs, cultural head coverings, and cultural clothing selections, ensuring avatar customization data persists properly",
+      "reqIds": [
+        "REQ-37"
       ],
       "status": "pending"
     }

@@ -1,12 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Add Pinterest as a social media link option in user profiles.
+**Goal:** Fix the deployment error that prevented the application from successfully deploying to the Internet Computer network.
 
 **Planned changes:**
-- Add Pinterest field to UserProfile data model in backend
-- Add Pinterest input field to profile setup modal
-- Display Pinterest icon on profile pages with clickable link
-- Enable Pinterest link editing in profile settings
+- Identify and resolve compilation or deployment errors in the codebase
+- Ensure the canister deploys successfully to the Internet Computer network
+- Verify all existing functionality remains operational after deployment
 
-**User-visible outcome:** Users can add their Pinterest profile URL during profile creation or editing, and visitors can click the Pinterest icon on profile pages to visit their Pinterest profiles.
+**User-visible outcome:** The application will be accessible on the Internet Computer network with all existing features working as expected.

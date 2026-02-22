@@ -1,17 +1,13 @@
 import Map "mo:core/Map";
-import List "mo:core/List";
-import Text "mo:core/Text";
-import Time "mo:core/Time";
 import Array "mo:core/Array";
 import Principal "mo:core/Principal";
 import Runtime "mo:core/Runtime";
-import Iter "mo:core/Iter";
-import Option "mo:core/Option";
-import Order "mo:core/Order";
-import MixinStorage "blob-storage/Mixin";
+import Time "mo:core/Time";
 import Storage "blob-storage/Storage";
+import Text "mo:core/Text";
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
+import MixinStorage "blob-storage/Mixin";
 import Migration "migration";
 
 (with migration = Migration.run)
@@ -27,10 +23,45 @@ actor {
   type UserProfile = {
     id : Principal;
     username : Text;
-    avatar : ?Storage.ExternalBlob;
+    avatar : AvatarCustomization;
     interests : [Text];
     debateStyle : DebateStyle;
     socialMedia : ?SocialMediaLinks;
+  };
+
+  type AvatarCustomization = {
+    skinTone : AvatarColorChoice;
+    hairType : AvatarStyleChoice;
+    eyewear : ?AvatarStyleChoice;
+    clothing : ?AvatarStyleChoice;
+  };
+
+  type AvatarStyleChoice = {
+    id : Nat;
+    styleType : AvatarStyleType;
+  };
+
+  type AvatarStyleType = {
+    #hair;
+    #beard;
+    #wig;
+    #hat;
+    #glasses;
+    #shirt;
+    #cape;
+    // Add more as needed
+  };
+
+  type AvatarColorChoice = {
+    colorId : Nat;
+    colorType : AvatarColorType;
+  };
+
+  type AvatarColorType = {
+    #skinToneLevel;
+    #hairColor;
+    #clothingColor;
+    // Add more as needed
   };
 
   type Post = {

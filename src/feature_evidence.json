@@ -2,10 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-pinterest-input-field-to-the-profilesetupmodal-component-where-users-can-enter-their-pinterest-profile-url-alongside-existing-social-media-links-twitter-instagram-linkedin-youtube",
-      "featureTitle": "Add Pinterest input field to the ProfileSetupModal component where users can enter their Pinterest profile URL alongside existing social media links (Twitter, Instagram, LinkedIn, YouTube)",
+      "featureId": "feature-identify-and-resolve-the-compilation-or-deployment-error-that-prevented-the-previous-build-from-successfully-deploying-to-the-internet-computer-network",
+      "featureTitle": "Identify and resolve the compilation or deployment error that prevented the previous build from successfully deploying to the Internet Computer network",
       "files": [
-        "frontend/src/components/ProfileSetupModal.tsx"
+        "frontend/src/components/ModerationActions.tsx",
+        "frontend/src/pages/ModeratorDashboard.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -17,47 +18,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-22"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-display-the-pinterest-link-on-the-profilepage-component-as-a-clickable-social-media-icon-alongside-other-social-links-twitter-instagram-linkedin-youtube-opening-the-pinterest-profile-in-a-new-tab-when-clicked",
-      "featureTitle": "Display the Pinterest link on the ProfilePage component as a clickable social media icon alongside other social links (Twitter, Instagram, LinkedIn, YouTube), opening the Pinterest profile in a new tab when clicked",
-      "files": [
-        "frontend/src/pages/ProfilePage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-23"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-pinterest-input-field-to-profile-editing-functionality-allowing-users-to-add-or-update-their-pinterest-profile-url-after-initial-profile-creation",
-      "featureTitle": "Add Pinterest input field to profile editing functionality, allowing users to add or update their Pinterest profile URL after initial profile creation",
-      "files": [
-        "frontend/src/pages/ProfilePage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-24"
+        "REQ-39"
       ],
       "confidence": "high"
     }

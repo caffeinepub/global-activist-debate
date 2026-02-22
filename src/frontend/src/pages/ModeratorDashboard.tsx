@@ -6,6 +6,7 @@ import ReportList from '../components/ReportList';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
+import { ReportStatus } from '../backend';
 
 export default function ModeratorDashboard() {
   const { identity } = useInternetIdentity();
@@ -44,9 +45,9 @@ export default function ModeratorDashboard() {
     );
   }
 
-  const pendingReports = reports.filter((r) => r.status === 'pending');
-  const reviewedReports = reports.filter((r) => r.status === 'reviewed');
-  const resolvedReports = reports.filter((r) => r.status === 'resolved');
+  const pendingReports = reports.filter((r) => r.status === ReportStatus.pending);
+  const reviewedReports = reports.filter((r) => r.status === ReportStatus.reviewed);
+  const resolvedReports = reports.filter((r) => r.status === ReportStatus.resolved);
 
   return (
     <div className="container py-8">

@@ -1,8 +1,8 @@
 import { Principal } from '@icp-sdk/core/principal';
 import { useNavigate } from '@tanstack/react-router';
 import { useGetUserProfile } from '../hooks/useQueries';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
+import AvatarPreview from './AvatarPreview';
 
 interface UserLinkProps {
   userId: Principal;
@@ -24,11 +24,10 @@ export default function UserLink({ userId, showAvatar = true }: UserLinkProps) {
       onClick={() => navigate({ to: '/profile/$userId', params: { userId: userId.toString() } })}
       className="flex items-center gap-2 hover:opacity-80 transition-opacity"
     >
-      {showAvatar && (
-        <Avatar className="h-6 w-6">
-          {profile?.avatar && <AvatarImage src={profile.avatar.getDirectURL()} />}
-          <AvatarFallback>{displayName[0]?.toUpperCase()}</AvatarFallback>
-        </Avatar>
+      {showAvatar && profile?.avatar && (
+        <div className="h-6 w-6">
+          <AvatarPreview avatar={profile.avatar} size="small" />
+        </div>
       )}
       <span className="font-semibold text-sm">{displayName}</span>
     </button>

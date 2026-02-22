@@ -21,8 +21,8 @@ export default function ModerationActions({ report }: ModerationActionsProps) {
 
   const { data: moderationHistory = [] } = useGetModerationActions(userId || Principal.anonymous());
 
-  const warningCount = moderationHistory.filter((a) => a.actionType === 'warning').length;
-  const strikeCount = moderationHistory.filter((a) => a.actionType === 'strike').length;
+  const warningCount = moderationHistory.filter((a) => a.actionType === ModerationType.warning).length;
+  const strikeCount = moderationHistory.filter((a) => a.actionType === ModerationType.strike).length;
 
   const handleModerate = async (actionType: ModerationType) => {
     if (!userId) {

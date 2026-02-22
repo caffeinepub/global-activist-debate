@@ -45,6 +45,10 @@ export interface SocialMediaLinks {
     pinterest?: string;
     facebook?: string;
 }
+export interface AvatarStyleChoice {
+    id: bigint;
+    styleType: AvatarStyleType;
+}
 export interface Report {
     id: bigint;
     status: ReportStatus;
@@ -54,6 +58,12 @@ export interface Report {
     reporter: Principal;
     violationType: ViolationType;
 }
+export interface AvatarCustomization {
+    clothing?: AvatarStyleChoice;
+    eyewear?: AvatarStyleChoice;
+    skinTone: AvatarColorChoice;
+    hairType: AvatarStyleChoice;
+}
 export interface ModerationAction {
     id: bigint;
     moderator: Principal;
@@ -62,6 +72,10 @@ export interface ModerationAction {
     description: string;
     timestamp: Time;
     violationType: ViolationType;
+}
+export interface AvatarColorChoice {
+    colorType: AvatarColorType;
+    colorId: bigint;
 }
 export interface Post {
     id: bigint;
@@ -86,7 +100,21 @@ export interface UserProfile {
     interests: Array<string>;
     socialMedia?: SocialMediaLinks;
     debateStyle: DebateStyle;
-    avatar?: ExternalBlob;
+    avatar: AvatarCustomization;
+}
+export enum AvatarColorType {
+    skinToneLevel = "skinToneLevel",
+    clothingColor = "clothingColor",
+    hairColor = "hairColor"
+}
+export enum AvatarStyleType {
+    hat = "hat",
+    wig = "wig",
+    glasses = "glasses",
+    cape = "cape",
+    hair = "hair",
+    shirt = "shirt",
+    beard = "beard"
 }
 export enum ConversationType {
     group = "group",

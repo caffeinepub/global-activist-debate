@@ -1,53 +1,56 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add Pinterest to social media link options in user profiles",
+  "title": "Fix Deployment Error",
   "requirements": [
     {
-      "id": "REQ-22",
-      "summary": "Add Pinterest input field to ProfileSetupModal for new profile creation",
+      "id": "REQ-39",
+      "summary": "Identify and resolve the compilation or deployment error that prevented the previous build from successfully deploying to the Internet Computer network",
       "acceptanceCriteria": [
-        "Pinterest input field is displayed in profile setup modal",
-        "Input field accepts Pinterest URL format",
-        "Pinterest link is included when submitting profile creation"
+        "The application compiles without errors",
+        "The canister successfully deploys to the Internet Computer network",
+        "All existing functionality remains operational after deployment"
       ],
       "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Review and fix any TypeScript compilation errors, import issues, or routing configuration problems that may be preventing the build. Ensure all imported components and types are correctly referenced and that the router configuration is valid."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Review and fix any TypeScript errors related to backend method calls, type mismatches between frontend types and backend interface types, or React Query configuration issues. Ensure all backend methods are called with correct parameters and return types match expectations."
+        },
         {
           "path": "frontend/src/components/ProfileSetupModal.tsx",
           "operation": "modify",
-          "description": "Add Pinterest input field to the social media links section alongside existing Twitter, Instagram, LinkedIn, and YouTube fields. Include the field in the form state and submission payload. Maintain consistency with existing social media input styling and layout patterns."
-        }
-      ]
-    },
-    {
-      "id": "REQ-23",
-      "summary": "Display Pinterest link on ProfilePage as clickable social media icon",
-      "acceptanceCriteria": [
-        "Pinterest icon is displayed when a user has a Pinterest link in their profile",
-        "Clicking the Pinterest icon opens the URL in a new browser tab",
-        "Pinterest icon matches the styling of other social media icons"
-      ],
-      "file_operations": [
+          "description": "Fix any TypeScript errors related to the UserProfile type, avatar customization, or form validation. Ensure the component correctly handles the profile data structure matching the backend interface."
+        },
         {
-          "path": "frontend/src/pages/ProfilePage.tsx",
+          "path": "frontend/src/components/PostCard.tsx",
           "operation": "modify",
-          "description": "Add Pinterest icon and link to the social media links section displayed on the profile page. Conditionally render the Pinterest icon only when userProfile.socialMedia?.pinterest exists. Style the icon consistently with other social media icons (Twitter, Instagram, LinkedIn, YouTube) and ensure the link opens in a new tab using target='_blank' and rel='noopener noreferrer'."
-        }
-      ]
-    },
-    {
-      "id": "REQ-24",
-      "summary": "Add Pinterest input field to profile editing functionality",
-      "acceptanceCriteria": [
-        "Users can edit their Pinterest link in profile settings",
-        "Changes to Pinterest link are saved to the backend",
-        "Updated Pinterest link is immediately reflected on the profile page"
-      ],
-      "file_operations": [
+          "description": "Review and fix any issues with ExternalBlob handling, media display, or interaction with backend methods. Ensure proper type safety and error handling for optional media fields."
+        },
         {
-          "path": "frontend/src/pages/ProfilePage.tsx",
+          "path": "frontend/src/components/MessageThread.tsx",
           "operation": "modify",
-          "description": "Add Pinterest input field to the inline profile editing form (if profile editing exists inline) or ensure that when editing mode is active, the Pinterest field is editable alongside other social media fields. Ensure the field is included in the profile update payload when saving changes. The updated Pinterest link should be reflected immediately after successful save due to React Query cache invalidation."
+          "description": "Fix any TypeScript errors related to conversation types, message handling, or participant display logic. Ensure compatibility with the Conversation and Message types from the backend interface."
+        },
+        {
+          "path": "frontend/src/components/ModerationActions.tsx",
+          "operation": "modify",
+          "description": "Review and fix any issues with report handling, moderation action types, or enum usage. Ensure all ModerationType and ViolationType enums are used correctly according to the backend interface."
+        },
+        {
+          "path": "frontend/src/pages/ModeratorDashboard.tsx",
+          "operation": "modify",
+          "description": "Fix any TypeScript errors related to report status updates, filtering logic, or admin permission checks. Ensure proper integration with the authorization system."
+        },
+        {
+          "path": "frontend/src/pages/SectionPage.tsx",
+          "operation": "modify",
+          "description": "Review and fix any issues with SectionType enum usage, post filtering, or route parameters. Ensure the section types match exactly with the backend SectionType enum values."
         }
       ]
     }

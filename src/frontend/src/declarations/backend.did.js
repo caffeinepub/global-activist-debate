@@ -43,13 +43,41 @@ export const DebateStyle = IDL.Variant({
   'civil' : IDL.Null,
   'random' : IDL.Null,
 });
+export const AvatarStyleType = IDL.Variant({
+  'hat' : IDL.Null,
+  'wig' : IDL.Null,
+  'glasses' : IDL.Null,
+  'cape' : IDL.Null,
+  'hair' : IDL.Null,
+  'shirt' : IDL.Null,
+  'beard' : IDL.Null,
+});
+export const AvatarStyleChoice = IDL.Record({
+  'id' : IDL.Nat,
+  'styleType' : AvatarStyleType,
+});
+export const AvatarColorType = IDL.Variant({
+  'skinToneLevel' : IDL.Null,
+  'clothingColor' : IDL.Null,
+  'hairColor' : IDL.Null,
+});
+export const AvatarColorChoice = IDL.Record({
+  'colorType' : AvatarColorType,
+  'colorId' : IDL.Nat,
+});
+export const AvatarCustomization = IDL.Record({
+  'clothing' : IDL.Opt(AvatarStyleChoice),
+  'eyewear' : IDL.Opt(AvatarStyleChoice),
+  'skinTone' : AvatarColorChoice,
+  'hairType' : AvatarStyleChoice,
+});
 export const UserProfile = IDL.Record({
   'id' : IDL.Principal,
   'username' : IDL.Text,
   'interests' : IDL.Vec(IDL.Text),
   'socialMedia' : IDL.Opt(SocialMediaLinks),
   'debateStyle' : DebateStyle,
-  'avatar' : IDL.Opt(ExternalBlob),
+  'avatar' : AvatarCustomization,
 });
 export const Time = IDL.Int;
 export const Message = IDL.Record({
@@ -249,13 +277,41 @@ export const idlFactory = ({ IDL }) => {
     'civil' : IDL.Null,
     'random' : IDL.Null,
   });
+  const AvatarStyleType = IDL.Variant({
+    'hat' : IDL.Null,
+    'wig' : IDL.Null,
+    'glasses' : IDL.Null,
+    'cape' : IDL.Null,
+    'hair' : IDL.Null,
+    'shirt' : IDL.Null,
+    'beard' : IDL.Null,
+  });
+  const AvatarStyleChoice = IDL.Record({
+    'id' : IDL.Nat,
+    'styleType' : AvatarStyleType,
+  });
+  const AvatarColorType = IDL.Variant({
+    'skinToneLevel' : IDL.Null,
+    'clothingColor' : IDL.Null,
+    'hairColor' : IDL.Null,
+  });
+  const AvatarColorChoice = IDL.Record({
+    'colorType' : AvatarColorType,
+    'colorId' : IDL.Nat,
+  });
+  const AvatarCustomization = IDL.Record({
+    'clothing' : IDL.Opt(AvatarStyleChoice),
+    'eyewear' : IDL.Opt(AvatarStyleChoice),
+    'skinTone' : AvatarColorChoice,
+    'hairType' : AvatarStyleChoice,
+  });
   const UserProfile = IDL.Record({
     'id' : IDL.Principal,
     'username' : IDL.Text,
     'interests' : IDL.Vec(IDL.Text),
     'socialMedia' : IDL.Opt(SocialMediaLinks),
     'debateStyle' : DebateStyle,
-    'avatar' : IDL.Opt(ExternalBlob),
+    'avatar' : AvatarCustomization,
   });
   const Time = IDL.Int;
   const Message = IDL.Record({

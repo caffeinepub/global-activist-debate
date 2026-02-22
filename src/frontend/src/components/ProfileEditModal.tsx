@@ -1,24 +1,23 @@
 import { useState, useEffect } from 'react';
-import { useGetCallerUserProfile, useSaveCallerUserProfile } from '../hooks/useQueries';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2 } from 'lucide-react';
-import { DebateStyle, AvatarCustomization, AvatarColorType, AvatarStyleType } from '../backend';
-import AvatarBuilder from './AvatarBuilder';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useSaveCallerUserProfile } from '../hooks/useQueries';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
+import { UserProfile, DebateStyle } from '../backend';
+import { Loader2 } from 'lucide-react';
 
 interface ProfileEditModalProps {
   open: boolean;
   onClose: () => void;
+  currentProfile: UserProfile;
 }
 
-export default function ProfileEditModal({ open, onClose }: ProfileEditModalProps) {
+export default function ProfileEditModal({ open, onClose, currentProfile }: ProfileEditModalProps) {
   const { identity } = useInternetIdentity();
-  const { data: userProfile } = useGetCallerUserProfile();
   const saveProfile = useSaveCallerUserProfile();
 
   const [username, setUsername] = useState('');
@@ -28,35 +27,25 @@ export default function ProfileEditModal({ open, onClose }: ProfileEditModalProp
   const [twitter, setTwitter] = useState('');
   const [instagram, setInstagram] = useState('');
   const [pinterest, setPinterest] = useState('');
-  const [avatar, setAvatar] = useState<AvatarCustomization>({
-    skinTone: {
-      colorId: BigInt(1),
-      colorType: AvatarColorType.skinToneLevel,
-    },
-    hairType: {
-      id: BigInt(1),
-      styleType: AvatarStyleType.hair,
-    },
-    eyewear: undefined,
-    clothing: undefined,
-  });
 
   useEffect(() => {
-    if (userProfile) {
-      setUsername(userProfile.username);
-      setInterests(userProfile.interests.join(', '));
-      setDebateStyle(userProfile.debateStyle);
-      setFacebook(userProfile.socialMedia?.facebook || '');
-      setTwitter(userProfile.socialMedia?.twitter || '');
-      setInstagram(userProfile.socialMedia?.instagram || '');
-      setPinterest(userProfile.socialMedia?.pinterest || '');
-      setAvatar(userProfile.avatar);
+    if (currentProfile) {
+      setUsername(currentProfile.username);
+      setInterests(currentProfile.interests.join(', '));
+      setDebateStyle(currentProfile.debateStyle);
+      setFacebook(currentProfile.socialMedia?.facebook || '');
+      setTwitter(currentProfile.socialMedia?.twitter || '');
+      setInstagram(currentProfile.socialMedia?.instagram || '');
+      setPinterest(currentProfile.socialMedia?.pinterest || '');
     }
-  }, [userProfile]);
+  }, [currentProfile]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!identity || !username.trim()) return;
+
+    if (!identity || !username.trim()) {
+      return;
+    }
 
     const interestsArray = interests
       .split(',')
@@ -76,7 +65,6 @@ export default function ProfileEditModal({ open, onClose }: ProfileEditModalProp
     await saveProfile.mutateAsync({
       id: identity.getPrincipal(),
       username: username.trim(),
-      avatar,
       interests: interestsArray,
       debateStyle,
       socialMedia,
@@ -87,75 +75,73 @@ export default function ProfileEditModal({ open, onClose }: ProfileEditModalProp
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Edit Your Profile</DialogTitle>
-          <DialogDescription>Update your activist profile information.</DialogDescription>
+          <DialogTitle>Edit Profile</DialogTitle>
         </DialogHeader>
+
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <Label htmlFor="username">Username *</Label>
-            <Input
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Your activist name"
-              required
-            />
-          </div>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="username">Username *</Label>
+              <Input
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter your username"
+                required
+              />
+            </div>
 
-          <div>
-            <Label>Customize Your Avatar</Label>
-            <AvatarBuilder value={avatar} onChange={setAvatar} />
-          </div>
+            <div>
+              <Label htmlFor="interests">Interests (comma-separated)</Label>
+              <Textarea
+                id="interests"
+                value={interests}
+                onChange={(e) => setInterests(e.target.value)}
+                placeholder="e.g., Climate Change, Human Rights, Education"
+                rows={3}
+              />
+            </div>
 
-          <div>
-            <Label htmlFor="interests">Activist Interests (comma-separated)</Label>
-            <Textarea
-              id="interests"
-              value={interests}
-              onChange={(e) => setInterests(e.target.value)}
-              placeholder="Climate change, human rights, education..."
-              rows={3}
-            />
-          </div>
+            <div>
+              <Label htmlFor="debateStyle">Debate Style</Label>
+              <Select value={debateStyle} onValueChange={(value) => setDebateStyle(value as DebateStyle)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={DebateStyle.civil}>Civil</SelectItem>
+                  <SelectItem value={DebateStyle.aggressive}>Aggressive</SelectItem>
+                  <SelectItem value={DebateStyle.creative}>Creative</SelectItem>
+                  <SelectItem value={DebateStyle.random}>Random</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-          <div>
-            <Label htmlFor="debateStyle">Debate Style *</Label>
-            <Select value={debateStyle} onValueChange={(value) => setDebateStyle(value as DebateStyle)}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value={DebateStyle.civil}>Civil - Respectful discussion</SelectItem>
-                <SelectItem value={DebateStyle.aggressive}>Aggressive - Heated debate</SelectItem>
-                <SelectItem value={DebateStyle.creative}>Creative - Artistic expression</SelectItem>
-                <SelectItem value={DebateStyle.random}>Random - Mix it up</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Social Media (Optional)</Label>
-            <Input
-              value={facebook}
-              onChange={(e) => setFacebook(e.target.value)}
-              placeholder="Facebook URL"
-              type="url"
-            />
-            <Input value={twitter} onChange={(e) => setTwitter(e.target.value)} placeholder="Twitter/X URL" type="url" />
-            <Input
-              value={instagram}
-              onChange={(e) => setInstagram(e.target.value)}
-              placeholder="Instagram URL"
-              type="url"
-            />
-            <Input
-              value={pinterest}
-              onChange={(e) => setPinterest(e.target.value)}
-              placeholder="Pinterest URL"
-              type="url"
-            />
+            <div className="space-y-3">
+              <Label>Social Media Links (optional)</Label>
+              <Input
+                value={facebook}
+                onChange={(e) => setFacebook(e.target.value)}
+                placeholder="Facebook URL"
+              />
+              <Input
+                value={twitter}
+                onChange={(e) => setTwitter(e.target.value)}
+                placeholder="Twitter/X URL"
+              />
+              <Input
+                value={instagram}
+                onChange={(e) => setInstagram(e.target.value)}
+                placeholder="Instagram URL"
+              />
+              <Input
+                value={pinterest}
+                onChange={(e) => setPinterest(e.target.value)}
+                placeholder="Pinterest URL"
+              />
+            </div>
           </div>
 
           <div className="flex gap-3">
@@ -163,14 +149,8 @@ export default function ProfileEditModal({ open, onClose }: ProfileEditModalProp
               Cancel
             </Button>
             <Button type="submit" className="flex-1" disabled={saveProfile.isPending || !username.trim()}>
-              {saveProfile.isPending ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                'Save Changes'
-              )}
+              {saveProfile.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Save Changes
             </Button>
           </div>
         </form>

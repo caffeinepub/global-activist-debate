@@ -1,56 +1,77 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix Deployment Error",
+  "title": "Fix missing profile icon in header and replace avatar with letter-in-circle design",
   "requirements": [
     {
-      "id": "REQ-39",
-      "summary": "Identify and resolve the compilation or deployment error that prevented the previous build from successfully deploying to the Internet Computer network",
+      "id": "REQ-54",
+      "summary": "Fix the profile icon button visibility issue in the Layout component header so it displays correctly for authenticated users",
       "acceptanceCriteria": [
-        "The application compiles without errors",
-        "The canister successfully deploys to the Internet Computer network",
-        "All existing functionality remains operational after deployment"
+        "Profile icon button is visible in the header for authenticated users",
+        "Icon appears in the correct position between navigation items and LoginButton",
+        "No console errors related to the profile icon rendering"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/src/components/Layout.tsx",
           "operation": "modify",
-          "description": "Review and fix any TypeScript compilation errors, import issues, or routing configuration problems that may be preventing the build. Ensure all imported components and types are correctly referenced and that the router configuration is valid."
+          "description": "Fix the profile icon button rendering logic to ensure it displays correctly for authenticated users. Verify the conditional rendering checks for isAuthenticated and identity states, and ensure proper positioning between navigation items and LoginButton. Review and fix any issues preventing the profile icon from appearing in the header."
+        }
+      ]
+    },
+    {
+      "id": "REQ-55",
+      "summary": "Replace all avatar displays throughout the application with a simple letter-in-circle design showing the first letter of the username on a colored background circle, removing all avatar customization functionality",
+      "acceptanceCriteria": [
+        "Profile icon displays first letter of username in a colored circle",
+        "UserLink component shows letter-in-circle instead of custom avatar",
+        "ProfilePage displays letter-in-circle instead of custom avatar",
+        "All instances of AvatarPreview component are replaced with letter-in-circle design",
+        "Avatar customization is completely removed from profile setup and editing flows",
+        "No references to AvatarBuilder or AvatarPreview components remain in active UI"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/UserAvatar.tsx",
+          "operation": "create",
+          "description": "Create a new UserAvatar component that displays a letter-in-circle design. The component should take a username prop, extract the first letter, display it in uppercase on a colored circle background, and generate consistent background colors based on the username using a hash function for color selection. Include size variants (small, medium, large) and proper styling with Tailwind CSS."
         },
         {
-          "path": "frontend/src/hooks/useQueries.ts",
+          "path": "frontend/src/components/Layout.tsx",
           "operation": "modify",
-          "description": "Review and fix any TypeScript errors related to backend method calls, type mismatches between frontend types and backend interface types, or React Query configuration issues. Ensure all backend methods are called with correct parameters and return types match expectations."
+          "description": "Replace the profile icon in the header with the new UserAvatar component showing the letter-in-circle design. Import and use the UserAvatar component, passing the current user's username from their profile. Ensure proper sizing and alignment within the header layout."
         },
+        {
+          "path": "frontend/src/components/UserLink.tsx",
+          "operation": "modify",
+          "description": "Replace the AvatarPreview component usage with the new UserAvatar component. Remove all imports and references to AvatarPreview and avatar customization data. Update the component to display the letter-in-circle design by passing the username to UserAvatar."
+        },
+        {
+          "path": "frontend/src/pages/ProfilePage.tsx",
+          "operation": "modify",
+          "description": "Replace the AvatarPreview component with the new UserAvatar component in the profile display section. Remove all avatar customization display logic and related imports. Update the profile header to show the letter-in-circle design with appropriate sizing for the profile page."
+        }
+      ]
+    },
+    {
+      "id": "REQ-56",
+      "summary": "Remove the AvatarBuilder component from ProfileSetupModal and ProfileEditModal, eliminating all avatar customization UI",
+      "acceptanceCriteria": [
+        "ProfileSetupModal no longer includes AvatarBuilder",
+        "ProfileEditModal no longer includes AvatarBuilder",
+        "Profile creation and editing work without avatar customization steps",
+        "No broken UI elements where avatar builder was previously displayed"
+      ],
+      "file_operations": [
         {
           "path": "frontend/src/components/ProfileSetupModal.tsx",
           "operation": "modify",
-          "description": "Fix any TypeScript errors related to the UserProfile type, avatar customization, or form validation. Ensure the component correctly handles the profile data structure matching the backend interface."
+          "description": "Remove the AvatarBuilder component and all avatar customization logic from the profile setup flow. Remove avatar-related imports, state management, and form fields. Update the modal layout to remove the avatar section, ensuring the remaining fields (username, interests, debate style, social media links) flow properly without broken spacing or layout issues."
         },
         {
-          "path": "frontend/src/components/PostCard.tsx",
+          "path": "frontend/src/components/ProfileEditModal.tsx",
           "operation": "modify",
-          "description": "Review and fix any issues with ExternalBlob handling, media display, or interaction with backend methods. Ensure proper type safety and error handling for optional media fields."
-        },
-        {
-          "path": "frontend/src/components/MessageThread.tsx",
-          "operation": "modify",
-          "description": "Fix any TypeScript errors related to conversation types, message handling, or participant display logic. Ensure compatibility with the Conversation and Message types from the backend interface."
-        },
-        {
-          "path": "frontend/src/components/ModerationActions.tsx",
-          "operation": "modify",
-          "description": "Review and fix any issues with report handling, moderation action types, or enum usage. Ensure all ModerationType and ViolationType enums are used correctly according to the backend interface."
-        },
-        {
-          "path": "frontend/src/pages/ModeratorDashboard.tsx",
-          "operation": "modify",
-          "description": "Fix any TypeScript errors related to report status updates, filtering logic, or admin permission checks. Ensure proper integration with the authorization system."
-        },
-        {
-          "path": "frontend/src/pages/SectionPage.tsx",
-          "operation": "modify",
-          "description": "Review and fix any issues with SectionType enum usage, post filtering, or route parameters. Ensure the section types match exactly with the backend SectionType enum values."
+          "description": "Remove the AvatarBuilder component and all avatar customization logic from the profile editing flow. Remove avatar-related imports, state management, and form fields. Ensure the profile data passed to saveCallerUserProfile no longer includes avatar customization fields. Update the modal layout to remove the avatar section while maintaining proper spacing and layout for remaining fields."
         }
       ]
     }

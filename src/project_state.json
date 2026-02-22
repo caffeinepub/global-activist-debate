@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 13,
+  "projectStateVersion": 23,
   "summary": "Global Activist Debate - A worldwide platform for activists to engage in civil or aggressive debates, share content (quotes/poems), and connect globally. Features user profiles, public debate forums, private messaging, moderation system with warnings/strikes, random debate matching, and mobile-responsive design.",
   "architectural_notes": [
     "User authentication and registration system required for global access",
@@ -15,8 +15,8 @@
     "Help/info system with animated UI and contextual usage guidance"
   ],
   "known_issues": [
-    "No visible profile icon or navigation element for users to access their own profile page",
-    "Avatar builder feature is glitchy and has usability/performance issues"
+    "Avatar builder background color does not change when selected",
+    "Avatar design does not match reference aesthetic - characters look ugly and should have no eyes or face, only hair, clothing, and skin tone like the provided reference image"
   ],
   "isFixRequest": true,
   "existing_features": [
@@ -224,25 +224,28 @@
       "id": "feature-add-hijab-options-to-the-avatarbuilder-component-with-multiple-styles-and-colors-allowing-users-to-select-hijab-as-a-head-covering-choice",
       "title": "Add hijab options to the AvatarBuilder component with multiple styles and colors, allowing users to select hijab as a head covering choice",
       "reqIds": [
-        "REQ-33"
+        "REQ-33",
+        "REQ-41"
       ],
-      "version": 1
+      "version": 2
     },
     {
       "id": "feature-add-cultural-head-covering-and-scarf-options-to-the-avatarbuilder-component-including-turbans-keffiyehs-durags-headwraps-and-other-traditional-head-coverings-from-diverse-cultures",
       "title": "Add cultural head covering and scarf options to the AvatarBuilder component, including turbans, keffiyehs, durags, headwraps, and other traditional head coverings from diverse cultures",
       "reqIds": [
-        "REQ-34"
+        "REQ-34",
+        "REQ-42"
       ],
-      "version": 1
+      "version": 2
     },
     {
       "id": "feature-add-cultural-clothing-options-to-the-avatarbuilder-component-including-traditional-garments-such-as-dashikis-saris-kimonos-hanboks-kaftans-and-other-culturally-significant-attire-from-around-the-world",
       "title": "Add cultural clothing options to the AvatarBuilder component, including traditional garments such as dashikis, saris, kimonos, hanboks, kaftans, and other culturally significant attire from around the world",
       "reqIds": [
-        "REQ-35"
+        "REQ-35",
+        "REQ-43"
       ],
-      "version": 1
+      "version": 2
     },
     {
       "id": "feature-redesign-the-avatar-builder-aesthetic-to-create-more-realistic-mature-character-representations-instead-of-silly-or-overly-cartoonish-designs-maintaining-visual-appeal-while-projecting-seriousness-appropriate-for-activist-discourse",
@@ -256,15 +259,88 @@
       "id": "feature-update-the-avatarpreview-component-to-properly-render-all-new-customization-options-including-hijabs-cultural-head-coverings-and-cultural-clothing-with-accurate-svg-representations-at-all-preview-sizes-small-medium-large",
       "title": "Update the AvatarPreview component to properly render all new customization options including hijabs, cultural head coverings, and cultural clothing with accurate SVG representations at all preview sizes (small/medium/large)",
       "reqIds": [
-        "REQ-38"
+        "REQ-38",
+        "REQ-45"
       ],
-      "version": 1
+      "version": 2
     },
     {
       "id": "feature-identify-and-resolve-the-compilation-or-deployment-error-that-prevented-the-previous-build-from-successfully-deploying-to-the-internet-computer-network",
       "title": "Identify and resolve the compilation or deployment error that prevented the previous build from successfully deploying to the Internet Computer network",
       "reqIds": [
         "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-avatarbuilder-component-to-include-comprehensive-skin-tone-options-representing-all-global-skin-tones-and-ethnic-backgrounds-as-specified-in-previous-requirements",
+      "title": "Update the AvatarBuilder component to include comprehensive skin tone options representing all global skin tones and ethnic backgrounds as specified in previous requirements",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-avatarbuilder-visual-aesthetic-to-create-more-realistic-mature-character-representations-instead-of-silly-or-overly-cartoonish-designs-maintaining-visual-appeal-while-projecting-seriousness-appropriate-for-activist-discourse",
+      "title": "Update the AvatarBuilder visual aesthetic to create more realistic, mature character representations instead of silly or overly cartoonish designs, maintaining visual appeal while projecting seriousness appropriate for activist discourse",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-simplify-the-avatar-head-svg-rendering-in-the-avatarpreview-component-by-reducing-the-number-of-facial-feature-lines-and-detail-elements-to-create-a-cleaner-more-realistic-appearance-without-excessive-line-work",
+      "title": "Simplify the avatar head SVG rendering in the AvatarPreview component by reducing the number of facial feature lines and detail elements to create a cleaner, more realistic appearance without excessive line work",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-background-color-selection-functionality-in-the-avatarbuilder-component-so-that-clicking-different-background-color-options-properly-updates-the-avatar-preview-background-color",
+      "title": "Fix the background color selection functionality in the AvatarBuilder component so that clicking different background color options properly updates the avatar preview background color",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-review-and-implement-avatar-design-patterns-from-previously-provided-reference-materials-to-match-the-desired-aesthetic-style-while-maintaining-all-customization-options-skin-tones-hijabs-cultural-head-coverings-cultural-clothing",
+      "title": "Review and implement avatar design patterns from previously provided reference materials to match the desired aesthetic style while maintaining all customization options (skin tones, hijabs, cultural head coverings, cultural clothing)",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-all-facial-features-eyes-nose-mouth-eyebrows-and-other-facial-detail-lines-from-the-avatarpreview-component-svg-rendering-keeping-only-the-head-shape-skin-tone-hair-head-coverings-and-clothing-elements-to-match-the-faceless-reference-design-provided-by-the-user",
+      "title": "Remove all facial features (eyes, nose, mouth, eyebrows, and other facial detail lines) from the AvatarPreview component SVG rendering, keeping only the head shape, skin tone, hair, head coverings, and clothing elements to match the faceless reference design provided by the user",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-profile-icon-button-visibility-issue-in-the-layout-component-header-so-it-displays-correctly-for-authenticated-users",
+      "title": "Fix the profile icon button visibility issue in the Layout component header so it displays correctly for authenticated users",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-all-avatar-displays-throughout-the-application-with-a-simple-letter-in-circle-design-showing-the-first-letter-of-the-username-on-a-colored-background-circle-removing-all-avatar-customization-functionality",
+      "title": "Replace all avatar displays throughout the application with a simple letter-in-circle design showing the first letter of the username on a colored background circle, removing all avatar customization functionality",
+      "reqIds": [
+        "REQ-55"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-avatarbuilder-component-from-profilesetupmodal-and-profileeditmodal-eliminating-all-avatar-customization-ui",
+      "title": "Remove the AvatarBuilder component from ProfileSetupModal and ProfileEditModal, eliminating all avatar customization UI",
+      "reqIds": [
+        "REQ-56"
       ],
       "version": 1
     }
@@ -409,6 +485,52 @@
       "summary": "Update the AvatarCustomization type in backend/main.mo to support new fields for hijabs, cultural head coverings, and cultural clothing selections, ensuring avatar customization data persists properly",
       "reqIds": [
         "REQ-37"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-43",
+      "summary": "Ensure the AvatarCustomization type in backend/main.mo supports all new fields for hijabs, cultural head coverings, and cultural clothing selections so avatar customization data persists properly across the platform",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-45",
+      "summary": "Update the AvatarBuilder component to remove any facial feature customization options (eye type, nose shape, mouth style, eyebrow options) from the interface since avatars no longer include faces",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-46",
+      "summary": "Revert the AvatarPreview component SVG rendering to match the design aesthetic from version 3 (two versions prior to the current implementation), restoring the visual style, proportions, and rendering approach used in that earlier version while maintaining all customization options (skin tones, hijabs, cultural head coverings, cultural clothing)",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-47",
+      "summary": "Revert the AvatarBuilder component interface and styling to match version 3 implementation, restoring the layout, tab structure, and visual presentation used in that earlier version",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-48",
+      "summary": "Replace avatar display in profile icon with simple letter-in-circle design (initial letter on colored background) - remove avatar option entirely",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-52",
+      "summary": "Update the UserProfile data model in backend/main.mo to remove avatar-related fields (avatar customization data) since avatars are no longer used",
+      "reqIds": [
+        "REQ-57"
       ],
       "status": "pending"
     }

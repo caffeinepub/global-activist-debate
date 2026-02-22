@@ -10,6 +10,8 @@ import RandomDebatePage from './pages/RandomDebatePage';
 import ModeratorDashboard from './pages/ModeratorDashboard';
 import ProfileSetupModal from './components/ProfileSetupModal';
 import { SectionType } from './backend';
+import { useInternetIdentity } from './hooks/useInternetIdentity';
+import { useGetCallerUserProfile } from './hooks/useQueries';
 
 const rootRoute = createRootRoute({
   component: Layout,
@@ -89,12 +91,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+function AppContent() {
+  const { identity, isInitializing } = useInternetIdentity();
+  const { data: userProfile, isLoading: profileLoading, isFetched } = useGetCallerUserProfile();
+
+  const isAuthenticated = !!identity;
+  const showProfileSetup = isAuthenticated && !profileLoading && isFetched && userProfile === null;
+
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ProfileSetupModal open={showProfileSetup} />
+      <Toaster />
+    </>
+  );
+}
+
 export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <RouterProvider router={router} />
-      <ProfileSetupModal />
-      <Toaster />
+      <AppContent />
     </ThemeProvider>
   );
 }

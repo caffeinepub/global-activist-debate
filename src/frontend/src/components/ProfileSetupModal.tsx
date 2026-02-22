@@ -1,20 +1,21 @@
 import { useState } from 'react';
-import { useInternetIdentity } from '../hooks/useInternetIdentity';
-import { useGetCallerUserProfile, useSaveCallerUserProfile } from '../hooks/useQueries';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useSaveCallerUserProfile } from '../hooks/useQueries';
+import { useInternetIdentity } from '../hooks/useInternetIdentity';
+import { DebateStyle } from '../backend';
 import { Loader2 } from 'lucide-react';
-import { DebateStyle, AvatarCustomization, AvatarColorType, AvatarStyleType } from '../backend';
-import AvatarBuilder from './AvatarBuilder';
 
-export default function ProfileSetupModal() {
+interface ProfileSetupModalProps {
+  open: boolean;
+}
+
+export default function ProfileSetupModal({ open }: ProfileSetupModalProps) {
   const { identity } = useInternetIdentity();
-  const isAuthenticated = !!identity;
-  const { data: userProfile, isLoading: profileLoading, isFetched } = useGetCallerUserProfile();
   const saveProfile = useSaveCallerUserProfile();
 
   const [username, setUsername] = useState('');
@@ -24,24 +25,13 @@ export default function ProfileSetupModal() {
   const [twitter, setTwitter] = useState('');
   const [instagram, setInstagram] = useState('');
   const [pinterest, setPinterest] = useState('');
-  const [avatar, setAvatar] = useState<AvatarCustomization>({
-    skinTone: {
-      colorId: BigInt(1),
-      colorType: AvatarColorType.skinToneLevel,
-    },
-    hairType: {
-      id: BigInt(1),
-      styleType: AvatarStyleType.hair,
-    },
-    eyewear: undefined,
-    clothing: undefined,
-  });
-
-  const showProfileSetup = isAuthenticated && !profileLoading && isFetched && userProfile === null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!identity || !username.trim()) return;
+
+    if (!identity || !username.trim()) {
+      return;
+    }
 
     const interestsArray = interests
       .split(',')
@@ -61,97 +51,87 @@ export default function ProfileSetupModal() {
     await saveProfile.mutateAsync({
       id: identity.getPrincipal(),
       username: username.trim(),
-      avatar,
       interests: interestsArray,
       debateStyle,
       socialMedia,
     });
   };
 
-  if (!showProfileSetup) return null;
-
   return (
-    <Dialog open={showProfileSetup}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto" onPointerDownOutside={(e) => e.preventDefault()}>
+    <Dialog open={open}>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Welcome to Global Activist Debate!</DialogTitle>
-          <DialogDescription>Let's set up your profile to get started.</DialogDescription>
+          <DialogTitle>Welcome! Set Up Your Profile</DialogTitle>
+          <DialogDescription>Tell us about yourself to get started on the platform.</DialogDescription>
         </DialogHeader>
+
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <Label htmlFor="username">Username *</Label>
-            <Input
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Your activist name"
-              required
-            />
-          </div>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="username">Username *</Label>
+              <Input
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter your username"
+                required
+              />
+            </div>
 
-          <div>
-            <Label>Customize Your Avatar</Label>
-            <AvatarBuilder value={avatar} onChange={setAvatar} />
-          </div>
+            <div>
+              <Label htmlFor="interests">Interests (comma-separated)</Label>
+              <Textarea
+                id="interests"
+                value={interests}
+                onChange={(e) => setInterests(e.target.value)}
+                placeholder="e.g., Climate Change, Human Rights, Education"
+                rows={3}
+              />
+            </div>
 
-          <div>
-            <Label htmlFor="interests">Activist Interests (comma-separated)</Label>
-            <Textarea
-              id="interests"
-              value={interests}
-              onChange={(e) => setInterests(e.target.value)}
-              placeholder="Climate change, human rights, education..."
-              rows={3}
-            />
-          </div>
+            <div>
+              <Label htmlFor="debateStyle">Debate Style</Label>
+              <Select value={debateStyle} onValueChange={(value) => setDebateStyle(value as DebateStyle)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={DebateStyle.civil}>Civil</SelectItem>
+                  <SelectItem value={DebateStyle.aggressive}>Aggressive</SelectItem>
+                  <SelectItem value={DebateStyle.creative}>Creative</SelectItem>
+                  <SelectItem value={DebateStyle.random}>Random</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-          <div>
-            <Label htmlFor="debateStyle">Debate Style *</Label>
-            <Select value={debateStyle} onValueChange={(value) => setDebateStyle(value as DebateStyle)}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value={DebateStyle.civil}>Civil - Respectful discussion</SelectItem>
-                <SelectItem value={DebateStyle.aggressive}>Aggressive - Heated debate</SelectItem>
-                <SelectItem value={DebateStyle.creative}>Creative - Artistic expression</SelectItem>
-                <SelectItem value={DebateStyle.random}>Random - Mix it up</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Social Media (Optional)</Label>
-            <Input
-              value={facebook}
-              onChange={(e) => setFacebook(e.target.value)}
-              placeholder="Facebook URL"
-              type="url"
-            />
-            <Input value={twitter} onChange={(e) => setTwitter(e.target.value)} placeholder="Twitter/X URL" type="url" />
-            <Input
-              value={instagram}
-              onChange={(e) => setInstagram(e.target.value)}
-              placeholder="Instagram URL"
-              type="url"
-            />
-            <Input
-              value={pinterest}
-              onChange={(e) => setPinterest(e.target.value)}
-              placeholder="Pinterest URL"
-              type="url"
-            />
+            <div className="space-y-3">
+              <Label>Social Media Links (optional)</Label>
+              <Input
+                value={facebook}
+                onChange={(e) => setFacebook(e.target.value)}
+                placeholder="Facebook URL"
+              />
+              <Input
+                value={twitter}
+                onChange={(e) => setTwitter(e.target.value)}
+                placeholder="Twitter/X URL"
+              />
+              <Input
+                value={instagram}
+                onChange={(e) => setInstagram(e.target.value)}
+                placeholder="Instagram URL"
+              />
+              <Input
+                value={pinterest}
+                onChange={(e) => setPinterest(e.target.value)}
+                placeholder="Pinterest URL"
+              />
+            </div>
           </div>
 
           <Button type="submit" className="w-full" disabled={saveProfile.isPending || !username.trim()}>
-            {saveProfile.isPending ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creating Profile...
-              </>
-            ) : (
-              'Create Profile'
-            )}
+            {saveProfile.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Create Profile
           </Button>
         </form>
       </DialogContent>

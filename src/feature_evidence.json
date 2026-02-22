@@ -2,11 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-identify-and-resolve-the-compilation-or-deployment-error-that-prevented-the-previous-build-from-successfully-deploying-to-the-internet-computer-network",
-      "featureTitle": "Identify and resolve the compilation or deployment error that prevented the previous build from successfully deploying to the Internet Computer network",
+      "featureId": "feature-fix-the-profile-icon-button-visibility-issue-in-the-layout-component-header-so-it-displays-correctly-for-authenticated-users",
+      "featureTitle": "Fix the profile icon button visibility issue in the Layout component header so it displays correctly for authenticated users",
       "files": [
-        "frontend/src/components/ModerationActions.tsx",
-        "frontend/src/pages/ModeratorDashboard.tsx"
+        "frontend/src/components/Layout.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -18,7 +17,51 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-39"
+        "REQ-54"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-replace-all-avatar-displays-throughout-the-application-with-a-simple-letter-in-circle-design-showing-the-first-letter-of-the-username-on-a-colored-background-circle-removing-all-avatar-customization-functionality",
+      "featureTitle": "Replace all avatar displays throughout the application with a simple letter-in-circle design showing the first letter of the username on a colored background circle, removing all avatar customization functionality",
+      "files": [
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/components/UserAvatar.tsx",
+        "frontend/src/components/UserLink.tsx",
+        "frontend/src/pages/ProfilePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-55"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-remove-the-avatarbuilder-component-from-profilesetupmodal-and-profileeditmodal-eliminating-all-avatar-customization-ui",
+      "featureTitle": "Remove the AvatarBuilder component from ProfileSetupModal and ProfileEditModal, eliminating all avatar customization UI",
+      "files": [
+        "frontend/src/components/ProfileEditModal.tsx",
+        "frontend/src/components/ProfileSetupModal.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-56"
       ],
       "confidence": "high"
     }

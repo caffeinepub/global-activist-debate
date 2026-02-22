@@ -10,6 +10,7 @@ import AccessControl "authorization/access-control";
 import MixinStorage "blob-storage/Mixin";
 import Migration "migration";
 
+// Attach migration in with clause
 (with migration = Migration.run)
 actor {
   // Init authorization system
@@ -23,45 +24,9 @@ actor {
   type UserProfile = {
     id : Principal;
     username : Text;
-    avatar : AvatarCustomization;
     interests : [Text];
     debateStyle : DebateStyle;
     socialMedia : ?SocialMediaLinks;
-  };
-
-  type AvatarCustomization = {
-    skinTone : AvatarColorChoice;
-    hairType : AvatarStyleChoice;
-    eyewear : ?AvatarStyleChoice;
-    clothing : ?AvatarStyleChoice;
-  };
-
-  type AvatarStyleChoice = {
-    id : Nat;
-    styleType : AvatarStyleType;
-  };
-
-  type AvatarStyleType = {
-    #hair;
-    #beard;
-    #wig;
-    #hat;
-    #glasses;
-    #shirt;
-    #cape;
-    // Add more as needed
-  };
-
-  type AvatarColorChoice = {
-    colorId : Nat;
-    colorType : AvatarColorType;
-  };
-
-  type AvatarColorType = {
-    #skinToneLevel;
-    #hairColor;
-    #clothingColor;
-    // Add more as needed
   };
 
   type Post = {
@@ -188,7 +153,6 @@ actor {
   };
 
   public query ({ caller }) func getUserProfile(user : Principal) : async ?UserProfile {
-    // Allow viewing any user's profile (public profiles)
     userProfiles.get(user);
   };
 
@@ -213,12 +177,10 @@ actor {
   };
 
   public query func getPost(postId : Nat) : async ?Post {
-    // Anyone can view posts (including guests)
     posts.get(postId);
   };
 
   public query func getPosts() : async [Post] {
-    // Anyone can view posts (including guests)
     posts.values().toArray();
   };
 
@@ -257,7 +219,6 @@ actor {
   public shared ({ caller }) func deletePost(postId : Nat) : async () {
     switch (posts.get(postId)) {
       case (?existingPost) {
-        // Only post author or admin can delete
         if (existingPost.author != caller and not AccessControl.isAdmin(accessControlState, caller)) {
           Runtime.trap("Unauthorized: Only post author or admin can delete posts");
         };
@@ -344,7 +305,6 @@ actor {
       Runtime.trap("Unauthorized: Only users can create conversations");
     };
 
-    // Caller must be in participants list
     let found = participants.find(func(x) { x == caller });
     switch (found) {
       case (null) {
@@ -371,7 +331,6 @@ actor {
 
     switch (conversations.get(conversationId)) {
       case (?conv) {
-        // Only participants can view the conversation
         let found = conv.participants.find(func(x) { x == caller });
         switch (found) {
           case (null) {

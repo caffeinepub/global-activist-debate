@@ -9,7 +9,7 @@ import { Edit } from 'lucide-react';
 import DebateStyleBadge from '../components/DebateStyleBadge';
 import FollowButton from '../components/FollowButton';
 import PostFeed from '../components/PostFeed';
-import AvatarPreview from '../components/AvatarPreview';
+import UserAvatar from '../components/UserAvatar';
 import ProfileEditModal from '../components/ProfileEditModal';
 import { SiFacebook, SiX, SiInstagram, SiPinterest } from 'react-icons/si';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
@@ -55,9 +55,7 @@ export default function ProfilePage() {
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex flex-col items-center gap-4 w-full">
-                  <div className="h-32 w-32">
-                    <AvatarPreview avatar={profile.avatar} size="large" />
-                  </div>
+                  <UserAvatar username={profile.username} size="large" />
                   <div className="text-center">
                     <CardTitle className="text-2xl">{profile.username}</CardTitle>
                     <div className="mt-2">
@@ -68,18 +66,6 @@ export default function ProfilePage() {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              {isOwnProfile && (
-                <Button
-                  variant="outline"
-                  className="w-full gap-2"
-                  onClick={() => setEditModalOpen(true)}
-                >
-                  <Edit className="h-4 w-4" />
-                  Edit Profile
-                </Button>
-              )}
-              {!isOwnProfile && <FollowButton userId={principal} />}
-
               {profile.interests.length > 0 && (
                 <div>
                   <h3 className="font-semibold mb-2">Interests</h3>
@@ -140,19 +126,41 @@ export default function ProfilePage() {
                   </div>
                 </div>
               )}
+
+              <div className="pt-4 space-y-2">
+                {isOwnProfile ? (
+                  <Button onClick={() => setEditModalOpen(true)} className="w-full gap-2">
+                    <Edit className="h-4 w-4" />
+                    Edit Profile
+                  </Button>
+                ) : (
+                  <FollowButton userId={principal} />
+                )}
+              </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Posts */}
+        {/* User Posts */}
         <div className="lg:col-span-2">
-          <h2 className="text-2xl font-bold mb-6">Posts by {profile.username}</h2>
-          <PostFeed posts={userPosts} />
+          <Card>
+            <CardHeader>
+              <CardTitle>Posts by {profile.username}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <PostFeed posts={userPosts} />
+            </CardContent>
+          </Card>
         </div>
       </div>
 
-      {/* Edit Profile Modal */}
-      <ProfileEditModal open={editModalOpen} onClose={() => setEditModalOpen(false)} />
+      {isOwnProfile && profile && (
+        <ProfileEditModal
+          open={editModalOpen}
+          onClose={() => setEditModalOpen(false)}
+          currentProfile={profile}
+        />
+      )}
     </div>
   );
 }

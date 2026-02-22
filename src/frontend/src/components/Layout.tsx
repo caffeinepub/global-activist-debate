@@ -1,14 +1,15 @@
 import { Outlet, useNavigate } from '@tanstack/react-router';
-import { Menu, MessageSquare, Shield, User, X, Info } from 'lucide-react';
+import { Menu, MessageSquare, Shield, X } from 'lucide-react';
 import { useState } from 'react';
 import { SiFacebook, SiX, SiInstagram } from 'react-icons/si';
 import LoginButton from './LoginButton';
 import SectionNavigation from './SectionNavigation';
 import HelpModal from './HelpModal';
+import UserAvatar from './UserAvatar';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
-import { useIsAdmin } from '../hooks/useQueries';
+import { useIsAdmin, useGetCallerUserProfile } from '../hooks/useQueries';
 
 export default function Layout() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export default function Layout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [helpModalOpen, setHelpModalOpen] = useState(false);
   const { data: isAdmin } = useIsAdmin();
+  const { data: userProfile } = useGetCallerUserProfile();
 
   const handleProfileClick = () => {
     if (identity) {
@@ -76,15 +78,15 @@ export default function Layout() {
                     Moderator
                   </Button>
                 )}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleProfileClick}
-                  className="gap-2"
-                >
-                  <User className="h-4 w-4" />
-                  Profile
-                </Button>
+                {userProfile && (
+                  <button
+                    onClick={handleProfileClick}
+                    className="hover:opacity-80 transition-opacity"
+                    aria-label="Profile"
+                  >
+                    <UserAvatar username={userProfile.username} size="medium" />
+                  </button>
+                )}
               </>
             )}
             <LoginButton />
@@ -137,17 +139,19 @@ export default function Layout() {
                           Moderator
                         </Button>
                       )}
-                      <Button
-                        variant="ghost"
-                        onClick={() => {
-                          handleProfileClick();
-                          setMobileMenuOpen(false);
-                        }}
-                        className="justify-start gap-2"
-                      >
-                        <User className="h-4 w-4" />
-                        Profile
-                      </Button>
+                      {userProfile && (
+                        <Button
+                          variant="ghost"
+                          onClick={() => {
+                            handleProfileClick();
+                            setMobileMenuOpen(false);
+                          }}
+                          className="justify-start gap-2"
+                        >
+                          <UserAvatar username={userProfile.username} size="small" />
+                          <span>Profile</span>
+                        </Button>
+                      )}
                     </>
                   )}
                   <LoginButton />

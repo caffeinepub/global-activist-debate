@@ -1,36 +1,92 @@
 {
   "kind": "build_request",
-  "title": "Fix deployment error",
+  "title": "Fix missing profile icon in header and replace avatar with letter-in-circle design",
+  "projectName": "Global Activist Debate",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-39",
-      "text": "Identify and resolve the compilation or deployment error that prevented the previous build from successfully deploying to the Internet Computer network",
-      "target": "unknown",
+      "id": "REQ-54",
+      "text": "Fix the profile icon button visibility issue in the Layout component header so it displays correctly for authenticated users",
+      "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-fix-request"
+          "msg-user-latest"
         ],
         "quotes": [
-          "Can you fix it ?"
+          "So the profile icon is not showing up"
         ]
       },
       "acceptanceCriteria": [
-        "The application compiles without errors",
-        "The canister successfully deploys to the Internet Computer network",
-        "All existing functionality remains operational after deployment"
+        "Profile icon button is visible in the header for authenticated users",
+        "Icon appears in the correct position between navigation items and LoginButton",
+        "No console errors related to the profile icon rendering"
+      ]
+    },
+    {
+      "id": "REQ-55",
+      "text": "Replace all avatar displays throughout the application with a simple letter-in-circle design showing the first letter of the username on a colored background circle, removing all avatar customization functionality",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-latest"
+        ],
+        "quotes": [
+          "Don't put the avatar option. I just want like the letter in the background circle option no avatar. I repeat no avatar."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Profile icon displays first letter of username in a colored circle",
+        "UserLink component shows letter-in-circle instead of custom avatar",
+        "ProfilePage displays letter-in-circle instead of custom avatar",
+        "All instances of AvatarPreview component are replaced with letter-in-circle design",
+        "Avatar customization is completely removed from profile setup and editing flows",
+        "No references to AvatarBuilder or AvatarPreview components remain in active UI"
+      ]
+    },
+    {
+      "id": "REQ-56",
+      "text": "Remove the AvatarBuilder component from ProfileSetupModal and ProfileEditModal, eliminating all avatar customization UI",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-latest"
+        ],
+        "quotes": [
+          "just no avatar"
+        ]
+      },
+      "acceptanceCriteria": [
+        "ProfileSetupModal no longer includes AvatarBuilder",
+        "ProfileEditModal no longer includes AvatarBuilder",
+        "Profile creation and editing work without avatar customization steps",
+        "No broken UI elements where avatar builder was previously displayed"
+      ]
+    },
+    {
+      "id": "REQ-57",
+      "text": "Update the UserProfile data model in backend/main.mo to remove avatar-related fields (avatar customization data) since avatars are no longer used",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-user-latest"
+        ]
+      },
+      "acceptanceCriteria": [
+        "UserProfile type no longer contains avatar or avatarCustomization fields",
+        "Profile creation and update functions work without avatar data",
+        "Existing profiles can be read without errors even if they contain old avatar data"
       ]
     }
   ],
   "constraints": [
-    "Preserve all existing features and functionality",
-    "Do not modify backend/main.mo actor architecture (single-actor pattern)",
-    "Do not edit immutable frontend paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui"
+    "Do not include any avatar customization functionality",
+    "Maintain all other existing profile features (username, interests, debate style, social links)",
+    "Keep the single-actor backend architecture"
   ],
   "nonGoals": [
-    "Adding new features",
-    "Refactoring unrelated code",
-    "Changing the visual design or user experience"
+    "Creating new avatar customization options",
+    "Preserving the AvatarBuilder or AvatarPreview components",
+    "Supporting custom avatar images or uploads"
   ],
   "imageRequirements": {
     "required": [],

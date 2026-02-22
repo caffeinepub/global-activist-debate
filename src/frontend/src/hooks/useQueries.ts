@@ -66,6 +66,20 @@ export function useSaveCallerUserProfile() {
   });
 }
 
+export function useFindUserIdByUsername(username: string) {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<Principal | null>({
+    queryKey: ['userIdByUsername', username],
+    queryFn: async () => {
+      if (!actor) return null;
+      return actor.findUserIdByUsername(username);
+    },
+    enabled: !!actor && !isFetching && username.trim().length > 0,
+    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
+  });
+}
+
 // Post Queries
 export function useGetPosts() {
   const { actor, isFetching } = useActor();

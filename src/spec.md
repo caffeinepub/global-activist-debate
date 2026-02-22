@@ -1,11 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Enable post creation functionality across all sections of the Global Activist Debate platform.
+**Goal:** Allow users to start conversations using usernames instead of Principal IDs.
 
 **Planned changes:**
-- Add CreatePostForm to HomePage above the post feed for general posts
-- Verify CreatePostForm integration on all section pages (Civil Debate, Aggressive Debate, Quotes & Poems, Random Debates)
-- Add success feedback, form clearing, and error handling to post creation flow
+- Replace Principal ID input with username input in StartConversationModal
+- Add backend query function to look up Principal ID by username with case-insensitive matching
+- Create React Query hook for username-to-Principal lookup with proper state handling
+- Update form submission to resolve username to Principal ID before creating conversation
 
-**User-visible outcome:** Authenticated users can create posts from the homepage and all section pages, receiving clear feedback when posts are successfully published or if errors occur.
+**User-visible outcome:** Users can start new conversations by entering a profile name instead of needing to know the other user's Principal ID.

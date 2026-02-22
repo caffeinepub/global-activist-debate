@@ -1,3 +1,5 @@
+// Attach migration in with clause
+
 import Map "mo:core/Map";
 import Array "mo:core/Array";
 import Principal "mo:core/Principal";
@@ -8,9 +10,6 @@ import Text "mo:core/Text";
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
 import MixinStorage "blob-storage/Mixin";
-
-
-// Attach migration in with clause
 
 actor {
   // Init authorization system
@@ -153,7 +152,22 @@ actor {
   };
 
   public query ({ caller }) func getUserProfile(user : Principal) : async ?UserProfile {
+    if (caller != user and not AccessControl.isAdmin(accessControlState, caller)) {
+      Runtime.trap("Unauthorized: Can only view your own profile");
+    };
     userProfiles.get(user);
+  };
+
+  public query ({ caller }) func findUserIdByUsername(username : Text) : async ?Principal {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only users can lookup usernames");
+    };
+    for ((principal, profile) in userProfiles.entries()) {
+      if (profile.username == username) {
+        return ?principal;
+      };
+    };
+    null;
   };
 
   // Posts

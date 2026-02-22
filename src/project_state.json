@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 25,
+  "projectStateVersion": 27,
   "summary": "Global Activist Debate - A worldwide platform for activists to engage in civil or aggressive debates, share content (quotes/poems), and connect globally. Features user profiles, public debate forums, private messaging, moderation system with warnings/strikes, random debate matching, and mobile-responsive design.",
   "architectural_notes": [
     "User authentication and registration system required for global access",
@@ -360,6 +360,30 @@
         "REQ-60"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-startconversationmodal-component-to-replace-the-principal-id-input-field-with-a-username-input-field-allowing-users-to-search-for-and-select-conversation-participants-by-their-username-instead-of-requiring-principal-id-knowledge",
+      "title": "Update the StartConversationModal component to replace the Principal ID input field with a username input field, allowing users to search for and select conversation participants by their username instead of requiring Principal ID knowledge",
+      "reqIds": [
+        "REQ-61"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-usequeries-ts-hook-to-add-a-query-function-for-looking-up-principal-ids-by-username-integrating-the-new-backend-query-into-the-react-query-system",
+      "title": "Update the useQueries.ts hook to add a query function for looking up Principal IDs by username, integrating the new backend query into the React Query system",
+      "reqIds": [
+        "REQ-63"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-startconversationmodal-form-submission-logic-to-resolve-the-username-to-a-principal-id-before-calling-the-startconversation-backend-function-maintaining-backward-compatibility-with-the-existing-conversation-creation-api",
+      "title": "Update the StartConversationModal form submission logic to resolve the username to a Principal ID before calling the startConversation backend function, maintaining backward compatibility with the existing conversation creation API",
+      "reqIds": [
+        "REQ-64"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -562,6 +586,20 @@
       "summary": "Verify that the CreatePostForm component is properly integrated into the SectionPage component for Civil Debate, Aggressive Debate, Quotes & Poems, and Random Debates sections, ensuring authenticated users can create section-specific posts",
       "reqIds": [
         "REQ-59"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-56",
+      "summary": "Update the private messaging UI so users can start conversations by entering a username instead of requiring a Principal ID",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-58",
+      "summary": "Add a backend query function to look up a user's Principal ID by their username, enabling username-based participant lookup for conversation creation",
+      "reqIds": [
+        "REQ-62"
       ],
       "status": "pending"
     }

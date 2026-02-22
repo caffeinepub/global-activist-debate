@@ -13,9 +13,10 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useStartConversation } from '../hooks/useQueries';
 import { ConversationType } from '../backend';
-import { Principal } from '@icp-sdk/core/principal';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
+import { useActor } from '../hooks/useActor';
 import { toast } from 'sonner';
+import { Loader2 } from 'lucide-react';
 
 interface StartConversationModalProps {
   open: boolean;
@@ -24,17 +25,28 @@ interface StartConversationModalProps {
 
 export default function StartConversationModal({ open, onOpenChange }: StartConversationModalProps) {
   const { identity } = useInternetIdentity();
-  const [participantInput, setParticipantInput] = useState('');
+  const { actor } = useActor();
+  const [usernameInput, setUsernameInput] = useState('');
   const [conversationType, setConversationType] = useState<ConversationType>(ConversationType.direct);
+  const [isLookingUp, setIsLookingUp] = useState(false);
   const startConversation = useStartConversation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!identity || !participantInput.trim()) return;
+    if (!identity || !usernameInput.trim() || !actor) return;
 
+    setIsLookingUp(true);
     try {
-      const otherPrincipal = Principal.fromText(participantInput.trim());
-      const participants = [identity.getPrincipal(), otherPrincipal];
+      // Look up the username to get the Principal ID
+      const userId = await actor.findUserIdByUsername(usernameInput.trim());
+      
+      if (!userId) {
+        toast.error('Username not found. Please check the username and try again.');
+        setIsLookingUp(false);
+        return;
+      }
+
+      const participants = [identity.getPrincipal(), userId];
 
       await startConversation.mutateAsync({
         participants,
@@ -42,29 +54,39 @@ export default function StartConversationModal({ open, onOpenChange }: StartConv
       });
 
       toast.success('Conversation started!');
-      setParticipantInput('');
+      setUsernameInput('');
       onOpenChange(false);
-    } catch (error) {
-      toast.error('Invalid principal ID');
+    } catch (error: any) {
+      console.error('Error starting conversation:', error);
+      if (error.message?.includes('not found') || error.message?.includes('Username')) {
+        toast.error('Username not found. Please check the username and try again.');
+      } else {
+        toast.error('Failed to start conversation. Please try again.');
+      }
+    } finally {
+      setIsLookingUp(false);
     }
   };
+
+  const isSubmitting = isLookingUp || startConversation.isPending;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Start New Conversation</DialogTitle>
-          <DialogDescription>Enter the principal ID of the user you want to message.</DialogDescription>
+          <DialogDescription>Enter the username of the person you want to message.</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="participant">User Principal ID</Label>
+            <Label htmlFor="username">Username</Label>
             <Input
-              id="participant"
-              value={participantInput}
-              onChange={(e) => setParticipantInput(e.target.value)}
-              placeholder="Enter principal ID..."
+              id="username"
+              value={usernameInput}
+              onChange={(e) => setUsernameInput(e.target.value)}
+              placeholder="Enter username..."
               required
+              disabled={isSubmitting}
             />
           </div>
           <div>
@@ -72,6 +94,7 @@ export default function StartConversationModal({ open, onOpenChange }: StartConv
             <Select
               value={conversationType}
               onValueChange={(value) => setConversationType(value as ConversationType)}
+              disabled={isSubmitting}
             >
               <SelectTrigger>
                 <SelectValue />
@@ -83,11 +106,12 @@ export default function StartConversationModal({ open, onOpenChange }: StartConv
             </Select>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting}>
               Cancel
             </Button>
-            <Button type="submit" disabled={!participantInput.trim() || startConversation.isPending}>
-              {startConversation.isPending ? 'Starting...' : 'Start Conversation'}
+            <Button type="submit" disabled={!usernameInput.trim() || isSubmitting || !actor}>
+              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isSubmitting ? 'Starting...' : 'Start Conversation'}
             </Button>
           </DialogFooter>
         </form>

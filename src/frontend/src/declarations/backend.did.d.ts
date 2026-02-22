@@ -135,6 +135,7 @@ export interface _SERVICE {
     undefined
   >,
   'deletePost' : ActorMethod<[bigint], undefined>,
+  'findUserIdByUsername' : ActorMethod<[string], [] | [Principal]>,
   'followTopic' : ActorMethod<[string], undefined>,
   'followUser' : ActorMethod<[Principal], undefined>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,

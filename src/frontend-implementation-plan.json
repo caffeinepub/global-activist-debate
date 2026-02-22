@@ -1,56 +1,55 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add post creation functionality to all sections",
+  "title": "Allow users to start conversations using username instead of Principal ID",
   "requirements": [
     {
-      "id": "REQ-58",
-      "summary": "Display CreatePostForm on HomePage above the post feed for authenticated users to create general posts",
+      "id": "REQ-61",
+      "summary": "Update StartConversationModal to use username input instead of Principal ID input for selecting conversation participants",
       "acceptanceCriteria": [
-        "CreatePostForm appears on HomePage above the post feed",
-        "Form is only visible to authenticated users",
-        "Posts created from HomePage appear in the general feed",
-        "Form follows the same styling and behavior as the section-specific CreatePostForm"
+        "StartConversationModal displays a username input field instead of Principal ID field",
+        "Users can type a username to search for other users",
+        "The component validates that the entered username exists before allowing conversation creation",
+        "Form submission creates a conversation using the username to resolve the Principal ID internally"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/HomePage.tsx",
+          "path": "frontend/src/components/StartConversationModal.tsx",
           "operation": "modify",
-          "description": "Add CreatePostForm component above the post feed section. Import and render CreatePostForm with appropriate props to create posts without a specific section. Ensure the form is only visible when the user is authenticated using the authorization component's useInternetIdentity hook. Position the form in the main content area above the existing post feed, maintaining the current two-column layout with rules sidebar. Pass appropriate section prop (or null/default) to CreatePostForm to indicate general feed posts."
+          "description": "Replace the Principal ID input field with a username input field. Update the form state to track username instead of principal string. Add validation to check if the username exists using the new lookup query hook before form submission. Display appropriate error messages when username is not found or invalid. Maintain the existing conversation type selection (direct/group) and overall modal structure."
         }
       ]
     },
     {
-      "id": "REQ-59",
-      "summary": "Verify CreatePostForm integration in all section pages for authenticated users to create section-specific posts",
+      "id": "REQ-63",
+      "summary": "Add React Query hook for username-to-Principal ID lookup in useQueries.ts",
       "acceptanceCriteria": [
-        "CreatePostForm is visible on all four section pages (Civil Debate, Aggressive Debate, Quotes & Poems, Random Debates)",
-        "Form is only visible to authenticated users",
-        "Posts created from section pages are automatically tagged with the correct section type",
-        "Form submission successfully creates posts that appear in the section-specific feed"
+        "New React Query hook is available for username-to-Principal lookup",
+        "Hook properly handles loading, error, and success states",
+        "Query results are cached appropriately to avoid redundant backend calls"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/SectionPage.tsx",
+          "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Review and verify that CreatePostForm is properly integrated into the SectionPage component for all four sections (Civil Debate, Aggressive Debate, Quotes & Poems, Random Debates). Ensure the form is conditionally rendered only for authenticated users using the authorization component's useInternetIdentity hook. Verify that the section prop passed to CreatePostForm correctly maps to the section type from the route params so posts are automatically tagged with the correct section. Confirm the form appears above the post feed and follows consistent styling across all sections."
+          "description": "Add a new React Query hook named useFindUserIdByUsername that accepts a username string parameter and calls the backend findUserIdByUsername method. Configure the query with appropriate cache settings and enable it conditionally based on whether a valid username is provided. Return loading, error, and data states. Ensure the query integrates seamlessly with the existing query setup and uses the actor instance from useActor."
         }
       ]
     },
     {
-      "id": "REQ-60",
-      "summary": "Add visual feedback and success messaging to CreatePostForm with form clearing and optional scroll behavior",
+      "id": "REQ-64",
+      "summary": "Update StartConversationModal form submission to resolve username to Principal ID before creating conversation",
       "acceptanceCriteria": [
-        "Success toast notification appears when post is created successfully",
-        "Form fields clear after successful submission",
-        "User receives clear feedback if post creation fails",
-        "Optional: Page scrolls to show the newly created post in the feed"
+        "Form submission first resolves the username to Principal ID using the lookup query",
+        "Resolved Principal ID is then used to create the conversation via existing backend function",
+        "Appropriate error messages are displayed if username lookup fails",
+        "Success flow remains unchanged after Principal ID is resolved"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/CreatePostForm.tsx",
+          "path": "frontend/src/components/StartConversationModal.tsx",
           "operation": "modify",
-          "description": "Add success and error handling to the CreatePostForm component. Import and use the toast notification system (already wired via Toaster in App.tsx) to display success messages when posts are created successfully. Clear all form fields (content textarea and image upload) after successful submission. Display error toast notifications with appropriate messages when post creation fails. Optionally implement scroll behavior to show the newly created post in the feed after successful submission. Ensure the form properly handles loading states during submission and prevents multiple submissions."
+          "description": "Integrate the useFindUserIdByUsername hook into the component. Update the form submission handler to first call the username lookup query to resolve the username to a Principal ID. Handle the case-insensitive lookup response. If the lookup succeeds, use the resolved Principal ID to call the existing startConversation mutation. If the lookup fails or returns null, display an error toast message indicating the username was not found. Maintain backward compatibility with the existing startConversation backend function signature by only changing the participant resolution logic."
         }
       ]
     }

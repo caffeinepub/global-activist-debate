@@ -1,55 +1,69 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-22T04:33:05.241Z",
+  "generatedAt": "2026-02-22T14:22:34.971Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
-    "implemented": 2,
+    "total": 4,
+    "implemented": 3,
     "items": [
       {
-        "id": "REQ-58",
-        "summary": "Update the HomePage component to display the CreatePostForm above the post feed, allowing authenticated users to create posts that appear in the general feed without specifying a section",
+        "id": "REQ-61",
+        "summary": "Update the StartConversationModal component to replace the Principal ID input field with a username input field, allowing users to search for and select conversation participants by their username instead of requiring Principal ID knowledge",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/HomePage.tsx"
+          "frontend/src/components/StartConversationModal.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/pages/HomePage.tsx"
+          "frontend/src/components/StartConversationModal.tsx"
         ]
       },
       {
-        "id": "REQ-59",
-        "summary": "Verify that the CreatePostForm component is properly integrated into the SectionPage component for Civil Debate, Aggressive Debate, Quotes & Poems, and Random Debates sections, ensuring authenticated users can create section-specific posts",
-        "status": "missing",
-        "plannedFiles": [
-          "frontend/src/pages/SectionPage.tsx"
-        ],
+        "id": "REQ-62",
+        "summary": "Add a backend query function to look up a user's Principal ID by their username, enabling username-based participant lookup for conversation creation",
+        "status": "unknown",
+        "plannedFiles": [],
         "matchedFiles": []
       },
       {
-        "id": "REQ-60",
-        "summary": "Add visual feedback and success messaging to the CreatePostForm component so users receive confirmation when their post is successfully created, including clearing the form fields and optionally scrolling to show the new post in the feed",
+        "id": "REQ-63",
+        "summary": "Update the useQueries.ts hook to add a query function for looking up Principal IDs by username, integrating the new backend query into the React Query system",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/CreatePostForm.tsx"
+          "frontend/src/hooks/useQueries.ts"
         ],
         "matchedFiles": [
-          "frontend/src/components/CreatePostForm.tsx"
+          "frontend/src/hooks/useQueries.ts"
+        ]
+      },
+      {
+        "id": "REQ-64",
+        "summary": "Update the StartConversationModal form submission logic to resolve the username to a Principal ID before calling the startConversation backend function, maintaining backward compatibility with the existing conversation creation API",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/StartConversationModal.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/StartConversationModal.tsx"
         ]
       }
     ]
   },
   "changedFiles": [
+    "backend/main.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/CreatePostForm.tsx",
-    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/StartConversationModal.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useQueries.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

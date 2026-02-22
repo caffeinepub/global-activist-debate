@@ -1,75 +1,93 @@
 {
   "kind": "build_request",
-  "title": "Add post creation functionality to all sections",
-  "projectName": "Global Activist Debate",
-  "priority": "high",
+  "title": "Allow users to start conversations using username instead of Principal ID",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-58",
-      "text": "Update the HomePage component to display the CreatePostForm above the post feed, allowing authenticated users to create posts that appear in the general feed without specifying a section",
+      "id": "REQ-61",
+      "text": "Update the StartConversationModal component to replace the Principal ID input field with a username input field, allowing users to search for and select conversation participants by their username instead of requiring Principal ID knowledge",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-last"
+          "msg-user-final"
         ],
         "quotes": [
-          "You didn't add a way to post anything"
+          "can you change that so that when you wanna make a conversation you just have to put your profile name"
         ]
       },
       "acceptanceCriteria": [
-        "CreatePostForm appears on HomePage above the post feed",
-        "Form is only visible to authenticated users",
-        "Posts created from HomePage appear in the general feed",
-        "Form follows the same styling and behavior as the section-specific CreatePostForm"
+        "StartConversationModal displays a username input field instead of Principal ID field",
+        "Users can type a username to search for other users",
+        "The component validates that the entered username exists before allowing conversation creation",
+        "Form submission creates a conversation using the username to resolve the Principal ID internally"
       ]
     },
     {
-      "id": "REQ-59",
-      "text": "Verify that the CreatePostForm component is properly integrated into the SectionPage component for Civil Debate, Aggressive Debate, Quotes & Poems, and Random Debates sections, ensuring authenticated users can create section-specific posts",
-      "target": "frontend",
+      "id": "REQ-62",
+      "text": "Add a backend query function to look up a user's Principal ID by their username, enabling username-based participant lookup for conversation creation",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-last"
+          "msg-user-final"
         ],
         "quotes": [
-          "You didn't add a way to post anything"
+          "can you change that so that when you wanna make a conversation you just have to put your profile name"
         ]
       },
       "acceptanceCriteria": [
-        "CreatePostForm is visible on all four section pages (Civil Debate, Aggressive Debate, Quotes & Poems, Random Debates)",
-        "Form is only visible to authenticated users",
-        "Posts created from section pages are automatically tagged with the correct section type",
-        "Form submission successfully creates posts that appear in the section-specific feed"
+        "Backend exposes a query function that accepts a username string and returns the corresponding Principal ID",
+        "Function returns an appropriate error or null response when username is not found",
+        "Function performs case-insensitive username matching for better user experience"
       ]
     },
     {
-      "id": "REQ-60",
-      "text": "Add visual feedback and success messaging to the CreatePostForm component so users receive confirmation when their post is successfully created, including clearing the form fields and optionally scrolling to show the new post in the feed",
+      "id": "REQ-63",
+      "text": "Update the useQueries.ts hook to add a query function for looking up Principal IDs by username, integrating the new backend query into the React Query system",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-last"
+          "msg-user-final"
+        ],
+        "quotes": [
+          "can you change that so that when you wanna make a conversation you just have to put your profile name"
         ]
       },
       "acceptanceCriteria": [
-        "Success toast notification appears when post is created successfully",
-        "Form fields clear after successful submission",
-        "User receives clear feedback if post creation fails",
-        "Optional: Page scrolls to show the newly created post in the feed"
+        "New React Query hook is available for username-to-Principal lookup",
+        "Hook properly handles loading, error, and success states",
+        "Query results are cached appropriately to avoid redundant backend calls"
+      ]
+    },
+    {
+      "id": "REQ-64",
+      "text": "Update the StartConversationModal form submission logic to resolve the username to a Principal ID before calling the startConversation backend function, maintaining backward compatibility with the existing conversation creation API",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-final"
+        ],
+        "quotes": [
+          "can you change that so that when you wanna make a conversation you just have to put your profile name"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Form submission first resolves the username to Principal ID using the lookup query",
+        "Resolved Principal ID is then used to create the conversation via existing backend function",
+        "Appropriate error messages are displayed if username lookup fails",
+        "Success flow remains unchanged after Principal ID is resolved"
       ]
     }
   ],
   "constraints": [
-    "Do not modify backend/main.mo - post creation logic already exists",
-    "Do not modify the CreatePostForm component structure - it already exists and handles post creation",
-    "Maintain the current authentication flow using Internet Identity",
-    "Keep the section-specific post tagging mechanism that already exists"
+    "Maintain the existing startConversation backend function signature - only add new lookup functionality",
+    "Preserve all existing conversation creation logic and validation rules",
+    "Ensure username lookup is case-insensitive for better user experience"
   ],
   "nonGoals": [
-    "Changing the post data model or backend logic",
-    "Adding new post types beyond the existing four sections",
-    "Modifying the authentication system",
-    "Redesigning the CreatePostForm component interface"
+    "Changing the underlying conversation data model or storage structure",
+    "Modifying existing conversation display or message thread functionality",
+    "Adding autocomplete or typeahead suggestions for username search",
+    "Allowing multiple participants to be added by username in a single operation"
   ],
   "imageRequirements": {
     "required": [],

@@ -129,6 +129,7 @@ export interface backendInterface {
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     createPost(content: string, media: ExternalBlob | null, section: SectionType): Promise<void>;
     deletePost(postId: bigint): Promise<void>;
+    findUserIdByUsername(username: string): Promise<Principal | null>;
     followTopic(topic: string): Promise<void>;
     followUser(userId: Principal): Promise<void>;
     getCallerUserProfile(): Promise<UserProfile | null>;
